@@ -5,6 +5,13 @@ const morgan = require('morgan');
 
 const PORT = 4000;
 
+const {
+  getItems,
+  getItemById,
+  getItemsByCategory,
+  getItemsByBodyLocation,
+} = require("./handlers");
+
 express()
   .use(function(req, res, next) {
     res.header(
@@ -23,7 +30,10 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use('/', express.static(__dirname + '/'))
 
-  // REST endpoints?
-  .get('/bacon', (req, res) => res.status(200).json('🥓'))
+  // REST endpoints
+  .get("/api/get-items", getItems)
+  .get("/api/get-item/:_id", getItemById)
+  .get("/api/get-items/cat/:cat", getItemsByCategory)
+  .get("/api/get-items/location/:location", getItemsByBodyLocation)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
