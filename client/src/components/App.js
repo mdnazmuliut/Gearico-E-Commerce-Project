@@ -1,15 +1,27 @@
-import { useState, useEffect } from 'react';
+import { BrowserRouter, Route } from "react-router-dom";
+import { Switch } from "react-dom";
+import Header from "./Header/Header";
+import GlobalStyles from "./GlobalStyles";
+import SectionOne from "./Home/Sections/Sec-1";
 
-function App() {
-  const [bacon, setBacon] = useState(null);
+const App = () => {
+  // return (
+  //   <>
+  //     <BrowserRouter>
+  //       <Switch>
+  //         <Route exact path="/"></Route>
+  //       </Switch>
+  //     </BrowserRouter>
+  //   </>
+  // );
 
-  useEffect(() => {
-    fetch('/bacon')
-      .then(res => res.json())
-      .then(data => setBacon(data));
-  }, []);
-
-  return <div>{bacon ? bacon : `...where's my stuff?...`}</div>;
-}
+  return (
+    <>
+      <GlobalStyles />
+      <Header />
+      <SectionOne />
+    </>
+  );
+};
 
 export default App;
