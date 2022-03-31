@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const express = require('express');
-const morgan = require('morgan');
+const express = require("express");
+const morgan = require("morgan");
 
 const PORT = 4000;
 
@@ -10,30 +10,32 @@ const {
   getItemById,
   getItemsByCategory,
   getItemsByBodyLocation,
+  placeOrder,
 } = require("./handlers");
 
 express()
-  .use(function(req, res, next) {
+  .use(function (req, res, next) {
     res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
+      "Access-Control-Allow-Methods",
+      "OPTIONS, HEAD, GET, PUT, POST, DELETE"
     );
     res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
     );
     next();
   })
-  .use(morgan('tiny'))
-  .use(express.static('./server/assets'))
+  .use(morgan("tiny"))
+  .use(express.static("./server/assets"))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
-  .use('/', express.static(__dirname + '/'))
+  .use("/", express.static(__dirname + "/"))
 
   // REST endpoints
   .get("/api/get-items", getItems)
   .get("/api/get-item/:_id", getItemById)
   .get("/api/get-items/cat/:cat", getItemsByCategory)
   .get("/api/get-items/location/:location", getItemsByBodyLocation)
+  .post("/api/place-order", placeOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
