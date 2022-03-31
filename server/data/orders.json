@@ -1,0 +1,14 @@
+[
+  {
+    "_id": 1001,
+    "customerInfo": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "address": "Montreal"
+    },
+    "orderInfo": [
+      { "_id": 6980, "qnt": 2 },
+      { "_id": 6629, "qnt": 1 }
+    ]
+  }
+]
