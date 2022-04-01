@@ -11,7 +11,7 @@ const {
   getItemsByCategory,
   getItemsByBodyLocation,
   placeOrder,
-} = require("./handlers");
+} = require("./handlersLocal");
 
 express()
   .use(function (req, res, next) {
