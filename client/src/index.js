@@ -4,10 +4,12 @@ import App from "./components/App";
 import { DataProvider } from "./components/Hooks/useContext";
 
 ReactDOM.render(
-  <React.StrictMode>
+
+
     <DataProvider>
       <App />
-    </DataProvider>
-  </React.StrictMode>,
+    </DataProvider>,
+ 
   document.getElementById("root")
+
 );

@@ -10,5 +10,47 @@ Endpoints:
 
 - GET "/api/get-items/:location" - requires the body location in params, returns an array of all items for that location. Locations include: "wrist, arms, head, chest, waist, neck".
 
-- POST "/api/place-order" - expects a json body with the customer information, as well as the item id and quantity for each item purchased. 
-Ex: { customerInfo: [], order: [{_id: 6980, qnt: 2}, {_id: 6629, qnt: 1}]}
+- POST "/api/place-order" - expects a json body with the customer information, as well as the item id and quantity for each item purchased.
+  Ex: { customerInfo: [], order: [{_id: 6980, qnt: 2}, {_id: 6629, qnt: 1}]}
+
+//=====Post=====
+
+1. first way:
+
+orders = [
+{
+"id": 1001,
+"customerInfo":
+{
+"firstName":"John",
+"lastName":"Doe",
+"address":"Montreal"
+},
+orderInfo:
+[
+{_id: 6980, qnt: 2},
+{_id: 6629, qnt: 1}
+]
+
+}
+]
+
+2. second way:
+
+{
+"id": 1001,
+"customerInfo":
+{
+"firstName":"John",
+"lastName":"Doe",
+"address":"Montreal"
+},
+orderInfo:
+{
+
+"6980":{ qnt: 2},
+"6629":{ qnt: 1}
+}
+
+}
+]
