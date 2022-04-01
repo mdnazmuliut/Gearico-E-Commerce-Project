@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
-const Sidebar = ({ setCatSelection, setSidebarToggle }) => {
+const Sidebar = ({ setCatSelection, setSidebarToggle, setCurrentPage }) => {
+  
+  const handleClick = (ev) => {
+    if (ev.target.value) {
+      setCatSelection(ev.target.value);
+      setCurrentPage(1);
+    }
+  }
+  
   return (
     <Wrapper>
       <NavBar>
         <Title onClick={() => setSidebarToggle(false)}>CATEGORIES</Title>
-        <List onClick={(ev) => ev.target.value && setCatSelection(ev.target.value)}>
+        <List onClick={(ev) => handleClick(ev)}>
           <li><Button value={"entertainment"}>Entertainment</Button></li>
           <li><Button value={"fitness"}>Fitness</Button></li>
           <li><Button value={"gaming"}>Gaming</Button></li>
