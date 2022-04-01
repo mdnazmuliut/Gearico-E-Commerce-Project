@@ -3,29 +3,36 @@ import { useEffect } from "react";
 
 const Header = () => {
   return (
-    <HeaderWrap>
-      <Wrapper>
-        <Logo href="/">Gearico</Logo>
-        <NavMenu>
-          <NavList>
-            <NavItem>
-              <LinkNav href="/">Home</LinkNav>
-            </NavItem>
-            <NavItem>
-              <LinkNav href="/products">Products</LinkNav>
-            </NavItem>
-            <NavItem>
-              <LinkNav href="/">Contact</LinkNav>
-            </NavItem>
-            <NavItem>
-              <LinkNav href="/">Cart</LinkNav>
-            </NavItem>
-          </NavList>
-        </NavMenu>
-      </Wrapper>
-    </HeaderWrap>
+    <>
+      <HeaderWrap>
+        <Wrapper>
+          <Logo href="/">Gearico</Logo>
+          <NavMenu>
+            <NavList>
+              <NavItem>
+                <LinkNav href="/">Home</LinkNav>
+              </NavItem>
+              <NavItem>
+                <LinkNav href="/products">Products</LinkNav>
+              </NavItem>
+              <NavItem>
+                <LinkNav href="/">Contact</LinkNav>
+              </NavItem>
+              <NavItem>
+                <LinkNav href="/">Cart</LinkNav>
+              </NavItem>
+            </NavList>
+          </NavMenu>
+        </Wrapper>
+      </HeaderWrap>
+      <SpacerDiv />
+    </>
   );
 };
+
+const SpacerDiv = styled.div`
+  height: 80px;
+`;
 
 const HeaderWrap = styled.header`
   background-color: black;

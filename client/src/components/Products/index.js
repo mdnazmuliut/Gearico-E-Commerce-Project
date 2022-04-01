@@ -3,36 +3,46 @@ import styled from "styled-components";
 
 import Sidebar from "./Sidebar";
 import ProductPreview from "./ProductPreview";
+import PageSelect from "./PageSelect";
 
 const Products = () => {
   const [catSelection, setCatSelection] = useState(null);
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [products, setProducts] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // setting the start point for the product fetch, based on the selected page #
+  const startPoint = currentPage * 10 - 10;
+
+  // setting the number of items displayed per page
+  const numItems = 10;
 
   useEffect(() => {
-    // clear any selected category from state upon inital page load
-    setCatSelection(null);
 
-    // fetching all items
-    fetch("/api/get-items")
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data.slice(0, 10)))
-      .catch((err) => console.log("error:", err));
-  }, []);
+    // fetching category-specific items if a category has been selected...
+    if (catSelection) {
+      fetch(`/api/get-items/cat/${catSelection}?start=${startPoint}&limit=${numItems}`)
+        .then((res) => res.json())
+        .then((data) => setProducts(data.data))
+        .catch((err) => console.log("error:", err));
+    } else {
 
-  useEffect(() => {
-    // fetching all items from a category any time a different category is selected
-    fetch(`/api/get-items/cat/${catSelection}`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data.slice(0, 10)))
-      .catch((err) => console.log("error:", err));
-  }, [catSelection]);
+      // ...otherwise, fetching all items
+      fetch(`/api/get-items?start=${startPoint}&limit=${numItems}`)
+        .then((res) => res.json())
+        .then((data) => setProducts(data.data))
+        .catch((err) => console.log("error:", err));
+    }
+  }, [currentPage, catSelection]);
+
+  if (!products) return <div>Loading...</div>;
 
   return (
     <Wrapper>
       {sidebarToggle ? (
         <Sidebar
           setSidebarToggle={setSidebarToggle}
+          setCurrentPage={setCurrentPage}
           setCatSelection={setCatSelection}
           catSelection={catSelection}
         />
@@ -43,13 +53,20 @@ const Products = () => {
       )}
       <MainDiv>
         <TitleDiv cat={catSelection}>
-          <h1>{ catSelection || "Products" }</h1>
+          <h1>{catSelection || "Products"}</h1>
         </TitleDiv>
         <ProductsGrid>
-            {products?.map((product) => {
-              return <ProductPreview productInfo={product} key={product._id} />;
-            })}
+          {products.map((product) => {
+            return <ProductPreview productInfo={product} key={product._id} />;
+          })}
         </ProductsGrid>
+        <PageDiv>
+          <PageSelect
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            numProducts={products.length}
+          />
+        </PageDiv>
       </MainDiv>
     </Wrapper>
   );
@@ -72,7 +89,7 @@ const MainDiv = styled.div`
 const TitleDiv = styled.div`
   padding: 100px 0;
   width: 100%;
-  background-color: ${({cat}) => cat ? "#ccc" : "#000"};
+  background-color: ${({ cat }) => (cat ? "#ccc" : "#000")};
 `;
 
 const SidebarButton = styled.button`
@@ -81,7 +98,6 @@ const SidebarButton = styled.button`
   height: auto;
   cursor: pointer;
   position: absolute;
-
 `;
 
 const ProductsGrid = styled.div`
@@ -90,5 +106,7 @@ const ProductsGrid = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
 `;
+
+const PageDiv = styled.div``;
 
 export default Products;
