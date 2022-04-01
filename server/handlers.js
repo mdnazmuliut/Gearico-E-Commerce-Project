@@ -22,13 +22,33 @@ const client = new MongoClient(MONGO_URI, options);
 const db = client.db("ecommerce");
 
 const getItems = async (req, res) => {
+  let start = req.query.start ? Number(req.query.start) : 0;
+  let limit = req.query.limit ? Number(req.query.limit) : 10;
   try {
     await client.connect();
+
     const items = await db.collection("items").find().toArray();
 
-    res
-      .status(200)
-      .json({ status: 200, data: items, message: "Request successful" });
+    let end = start + limit;
+    let reqResult = items.slice(start, end);
+
+    if (start + limit > items.length) {
+      limit = Number(items.length) - start;
+    }
+
+    switch (true) {
+      case items.length <= 0:
+        res.json({ status: 400, data: "not found" });
+        break;
+      default:
+        res.status(200).json({
+          status: 200,
+          start: start,
+          limit: limit,
+          data: reqResult,
+          message: "Request successful",
+        });
+    }
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }
@@ -53,8 +73,13 @@ const getItemById = async (req, res) => {
 
 const getItemsByCategory = async (req, res) => {
   const cat = req.params.cat.toLowerCase();
+
+  let start = req.query.start ? Number(req.query.start) : 0;
+  let limit = req.query.limit ? Number(req.query.limit) : 10;
+
   try {
     await client.connect();
+
     const items = await db.collection("items").find().toArray();
 
     let itemList = [];
@@ -62,9 +87,26 @@ const getItemsByCategory = async (req, res) => {
       if (item.category.toLowerCase() === cat) itemList.push(item);
     });
 
-    res
-      .status(200)
-      .json({ status: 200, data: itemList, message: "Request successful" });
+    let end = start + limit;
+    let reqResult = itemList.slice(start, end);
+
+    if (start + limit > itemList.length) {
+      limit = Number(itemList.length) - start;
+    }
+
+    switch (true) {
+      case itemList.length <= 0:
+        res.json({ status: 400, data: "not found" });
+        break;
+      default:
+        res.status(200).json({
+          status: 200,
+          start: start,
+          limit: limit,
+          data: reqResult,
+          message: "Request successful",
+        });
+    }
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }
@@ -73,6 +115,8 @@ const getItemsByCategory = async (req, res) => {
 
 const getItemsByBodyLocation = async (req, res) => {
   const location = req.params.location.toLowerCase();
+  let start = req.query.start ? Number(req.query.start) : 0;
+  let limit = req.query.limit ? Number(req.query.limit) : 10;
   try {
     await client.connect();
     const items = await db.collection("items").find().toArray();
@@ -82,9 +126,26 @@ const getItemsByBodyLocation = async (req, res) => {
       if (item.body_location.toLowerCase() === location) itemList.push(item);
     });
 
-    res
-      .status(200)
-      .json({ status: 200, data: itemList, message: "Request successful" });
+    let end = start + limit;
+    let reqResult = itemList.slice(start, end);
+
+    if (start + limit > itemList.length) {
+      limit = Number(itemList.length) - start;
+    }
+
+    switch (true) {
+      case itemList.length <= 0:
+        res.json({ status: 400, data: "not found" });
+        break;
+      default:
+        res.status(200).json({
+          status: 200,
+          start: start,
+          limit: limit,
+          data: reqResult,
+          message: "Request successful",
+        });
+    }
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }
@@ -143,47 +204,6 @@ const placeOrder = async (req, res) => {
         message: "Request successful",
       });
     });
-
-    //   .then(() => client.close());
-
-    // await Promise.all(promises).then((results) => {
-    //   //   console.log("All done", results);
-
-    //   res.status(200).json({
-    //     status: 200,
-    //     data: result,
-    //     itemList,
-    //     message: "Request successful",
-    //   });
-    // });
-
-    // await reqInfo.orderInfo.forEach((el) => {
-    //   db.collection("items").updateOne(
-    //     { _id: el._id },
-    //     { $inc: { numInStock: -el.qnt } }
-    //   );
-    // });
-
-    // let remainingStock = [];
-
-    // items.forEach((item) => {
-    //   orderInfoList.map((el) => {
-    //     if (el._id == item._id) {
-    //       return remainingStock.push(item.numInStock - el.qnt);
-    //     }
-    //   });
-    // });
-
-    // console.log("orderInfoList:", orderInfoList);
-    // console.log("OrderId:", orderId);
-    // console.log("remainingStock:", remainingStock);
-
-    // res.status(200).json({
-    //   status: 200,
-    //   data: orders,
-    //   itemList,
-    //   message: "Request successful",
-    // });
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }
