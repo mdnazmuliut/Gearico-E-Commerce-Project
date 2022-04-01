@@ -38,7 +38,7 @@ const getItems = async (req, res) => {
 
     switch (true) {
       case items.length <= 0:
-        res.json({ status: 400, data: "not found" });
+        res.json({ status: 400, message: "not found" });
         break;
       default:
         res.status(200).json({
@@ -96,7 +96,7 @@ const getItemsByCategory = async (req, res) => {
 
     switch (true) {
       case itemList.length <= 0:
-        res.json({ status: 400, data: "not found" });
+        res.json({ status: 400, message: "not found" });
         break;
       default:
         res.status(200).json({
@@ -135,7 +135,7 @@ const getItemsByBodyLocation = async (req, res) => {
 
     switch (true) {
       case itemList.length <= 0:
-        res.json({ status: 400, data: "not found" });
+        res.json({ status: 400, message: "not found" });
         break;
       default:
         res.status(200).json({
