@@ -1,16 +1,27 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
 
 const Header = () => {
   return (
     <HeaderWrap>
       <Wrapper>
-        <Logo>Gearico</Logo>
-        <Text>Home</Text>
-        <Text>Categories</Text>
-        <Text>Products</Text>
-        <Text>About</Text>
-        <Text>Contact</Text>
+        <Logo href="/">Gearico</Logo>
+        <NavMenu>
+          <NavList>
+            <NavItem>
+              <LinkNav href="/">Home</LinkNav>
+            </NavItem>
+            <NavItem>
+              <LinkNav href="/products">Products</LinkNav>
+            </NavItem>
+            <NavItem>
+              <LinkNav href="/">Contact</LinkNav>
+            </NavItem>
+            <NavItem>
+              <LinkNav href="/">Cart</LinkNav>
+            </NavItem>
+          </NavList>
+        </NavMenu>
       </Wrapper>
     </HeaderWrap>
   );
@@ -24,24 +35,49 @@ const HeaderWrap = styled.header`
   max-height: 500px;
   z-index: 100;
   position: fixed;
+  top: 0;
+  left: 0;
+  font-family: "Open Sans", sans-serif;
 `;
 
 const Wrapper = styled.nav`
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 4.5rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding: 25px;
 `;
 
-const Logo = styled.h3`
-  cursor: pointer;
+const Logo = styled.a`
+  font-weight: 600;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
 `;
 
-const Text = styled.span`
-  margin: 0 10px;
-  font-weight: bold;
-  cursor: pointer;
+const NavMenu = styled.div`
+  display: flex;
+  column-gap: 1rem;
+  position: relative;
+`;
+
+const NavList = styled.ul`
+  flex-direction: row;
+  column-gap: 4rem;
+  display: flex;
+  row-gap: 2.5rem;
+  list-style: none;
+`;
+
+const NavItem = styled.li``;
+
+const LinkNav = styled.a`
+  color: white;
+  text-transform: initial;
+  position: relative;
+  text-decoration: none;
 `;
 
 export default Header;

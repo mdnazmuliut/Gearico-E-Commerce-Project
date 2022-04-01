@@ -1,7 +1,7 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./Header/Header";
 import GlobalStyles from "./GlobalStyles";
-import Home from "./Home/Home"
+import Home from "./Home/Home";
 import Products from "./Products";
 import SingleProduct from "./SingleProduct/SingleProduct";
 
@@ -25,7 +25,6 @@ const App = () => {
       </BrowserRouter>
     </>
   );
-
 };
 
 export default App;

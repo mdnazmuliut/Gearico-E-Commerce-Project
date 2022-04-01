@@ -1,21 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
-  /* :root {
-    --color-cadmium-red: #D80026;
-    --color-alabama-crimson: #AA001E;
-    --color-orange: #F79D00;
-    --color-selective-yellow: #FDBB01;
-    --color-desert-sand: #E3C4A6;
-    --font-heading: 'Permanent Marker', Arial, Helvetica, sans-serif;
-    --font-body: 'Kosugi', Arial, Helvetica, sans-serif;
-    --padding-page: 24px;
-  } */
-
-  /* http://meyerweb.com/eric/tools/css/reset/
-      v2.0 | 20110126
-      License: none (public domain)
-  */
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
