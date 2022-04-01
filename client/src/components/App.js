@@ -1,7 +1,7 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Header from "./Header/Header";
 import GlobalStyles from "./GlobalStyles";
-import SectionOne from "./Home/Sections/Sec-1";
+import Home from "./Home/Home"
 import Products from "./Products";
 import SingleProduct from "./SingleProduct/SingleProduct";
 
@@ -13,7 +13,7 @@ const App = () => {
         <Header />
         <Switch>
           <Route exact path="/">
-            <SectionOne />
+            <Home />
           </Route>
           <Route path="/products/:productId">
             <SingleProduct />

@@ -23,6 +23,7 @@ const HeaderWrap = styled.header`
   width: 100%;
   max-height: 500px;
   z-index: 100;
+  position: fixed;
 `;
 
 const Wrapper = styled.nav`

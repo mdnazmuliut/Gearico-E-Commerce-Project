@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import watches from "../../../assets/watches.png";
+import { DataContext } from "../../Hooks/useContext";
 
 const SectionOne = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch("/api/get-items")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.data[0]);
-        setData(data.data);
-      });
-  }, []);
+  const { data } = useContext(DataContext);
 
   if (!data) {
     return <p>Loading...</p>;
@@ -21,7 +13,7 @@ const SectionOne = () => {
   return (
     <Wrapper>
       <Top />
-      <Bottom />
+      {/* <Bottom /> */}
       <ImageWrap>
         <Image src={watches} />
         {/* <Image src={data[0].imageSrc} /> */}
@@ -61,9 +53,7 @@ const Top = styled.div`
 `;
 
 const Bottom = styled.div`
-  max-height: 40vh;
-  max-width: 100vw;
-  height: 40vh;
+  height: 39vh;
   width: 100vw;
   /* background: radial-gradient(circle, rgb(255, 214, 10), rgb(50, 15, 15)); */
   background: radial-gradient(
@@ -75,12 +65,12 @@ const Bottom = styled.div`
 
 const ImageWrap = styled.div`
   position: absolute;
-  top: 25%;
+  top: 17%;
 `;
 
 const Image = styled.img`
-  -webkit-box-reflect: below 45px
-    linear-gradient(transparent, rgba(255, 255, 255, 0.8));
+  /* -webkit-box-reflect: below 45px
+    linear-gradient(transparent, rgba(255, 255, 255, 0.8)); */
 `;
 
 const ProductWrap = styled.div`

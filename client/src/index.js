@@ -1,8 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
+import { DataProvider } from "./components/Hooks/useContext";
 
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+
+
+    <DataProvider>
+      <App />
+    </DataProvider>,
+ 
+  document.getElementById("root")
+
 );
