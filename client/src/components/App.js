@@ -2,7 +2,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Switch } from "react-dom";
 import Header from "./Header/Header";
 import GlobalStyles from "./GlobalStyles";
-import SectionOne from "./Home/Sections/Sec-1";
+import Home from "./Home/Home";
 
 const App = () => {
   // return (
@@ -19,7 +19,7 @@ const App = () => {
     <>
       <GlobalStyles />
       <Header />
-      <SectionOne />
+      <Home />
     </>
   );
 };
