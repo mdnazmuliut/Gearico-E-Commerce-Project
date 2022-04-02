@@ -1,4 +1,5 @@
 const items = require("./data/items.json");
+const companies = require("./data/companies.json")
 
 const getItems = async (req, res) => {
   let start = req.query.start ? Number(req.query.start) : 0;
@@ -102,10 +103,24 @@ const placeOrder = async (req, res) => {
   }
 };
 
+const getCompanyById = async (req, res) => {
+  const id = Number(req.params._id);
+  try {
+    const company = companies.find(({ _id }) => _id === id);
+
+    (company)
+    ? res.status(200).json({ status: 200, data: company, message: "Request successful" })
+    : res.status(404).json({ status: 404, data: id, message: "Company not found"})
+  } catch (err) {
+    res.status(500).json({ status: 500, data: id, message: "Server error" });
+  }
+};
+
 module.exports = {
   getItems,
   getItemById,
   getItemsByCategory,
   getItemsByBodyLocation,
   placeOrder,
+  getCompanyById,
 };

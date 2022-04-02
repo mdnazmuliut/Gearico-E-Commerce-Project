@@ -24,17 +24,19 @@ const db = client.db("ecommerce");
 const getItems = async (req, res) => {
   let start = req.query.start ? Number(req.query.start) : 0;
   let limit = req.query.limit ? Number(req.query.limit) : 10;
+
   try {
     await client.connect();
 
-    const items = await db.collection("items").find().toArray();
+    console.log("limit---", limit);
+    console.log("start---", start);
 
-    let end = start + limit;
-    let reqResult = items.slice(start, end);
-
-    if (start + limit > items.length) {
-      limit = Number(items.length) - start;
-    }
+    const items = await db
+      .collection("items")
+      .find()
+      .limit(limit)
+      .skip(start)
+      .toArray();
 
     switch (true) {
       case items.length <= 0:
@@ -45,7 +47,7 @@ const getItems = async (req, res) => {
           status: 200,
           start: start,
           limit: limit,
-          data: reqResult,
+          data: items,
           message: "Request successful",
         });
     }
@@ -56,12 +58,11 @@ const getItems = async (req, res) => {
 };
 
 const getItemById = async (req, res) => {
-  const id = req.params._id;
+  const id = Number(req.params._id);
   try {
     await client.connect();
-    const items = await db.collection("items").find().toArray();
+    const item = await db.collection("items").findOne({ _id: id });
 
-    const item = items.find(({ _id }) => _id == id);
     res
       .status(200)
       .json({ status: 200, data: item, message: "Request successful" });
@@ -72,30 +73,22 @@ const getItemById = async (req, res) => {
 };
 
 const getItemsByCategory = async (req, res) => {
-  const cat = req.params.cat.toLowerCase();
-
+  const cat = req.params.cat;
   let start = req.query.start ? Number(req.query.start) : 0;
   let limit = req.query.limit ? Number(req.query.limit) : 10;
 
   try {
     await client.connect();
 
-    const items = await db.collection("items").find().toArray();
-
-    let itemList = [];
-    items.forEach((item) => {
-      if (item.category.toLowerCase() === cat) itemList.push(item);
-    });
-
-    let end = start + limit;
-    let reqResult = itemList.slice(start, end);
-
-    if (start + limit > itemList.length) {
-      limit = Number(itemList.length) - start;
-    }
+    const items = await db
+      .collection("items")
+      .find({ category: cat })
+      .limit(limit)
+      .skip(start)
+      .toArray();
 
     switch (true) {
-      case itemList.length <= 0:
+      case items.length <= 0:
         res.json({ status: 400, message: "not found" });
         break;
       default:
@@ -103,7 +96,7 @@ const getItemsByCategory = async (req, res) => {
           status: 200,
           start: start,
           limit: limit,
-          data: reqResult,
+          data: items,
           message: "Request successful",
         });
     }
@@ -114,27 +107,22 @@ const getItemsByCategory = async (req, res) => {
 };
 
 const getItemsByBodyLocation = async (req, res) => {
-  const location = req.params.location.toLowerCase();
+  const location = req.params.location;
   let start = req.query.start ? Number(req.query.start) : 0;
   let limit = req.query.limit ? Number(req.query.limit) : 10;
+
   try {
     await client.connect();
-    const items = await db.collection("items").find().toArray();
 
-    let itemList = [];
-    items.forEach((item) => {
-      if (item.body_location.toLowerCase() === location) itemList.push(item);
-    });
-
-    let end = start + limit;
-    let reqResult = itemList.slice(start, end);
-
-    if (start + limit > itemList.length) {
-      limit = Number(itemList.length) - start;
-    }
+    const items = await db
+      .collection("items")
+      .find({ body_location: location })
+      .limit(limit)
+      .skip(start)
+      .toArray();
 
     switch (true) {
-      case itemList.length <= 0:
+      case items.length <= 0:
         res.json({ status: 400, message: "not found" });
         break;
       default:
@@ -142,7 +130,7 @@ const getItemsByBodyLocation = async (req, res) => {
           status: 200,
           start: start,
           limit: limit,
-          data: reqResult,
+          data: items,
           message: "Request successful",
         });
     }
@@ -211,10 +199,26 @@ const placeOrder = async (req, res) => {
   client.close();
 };
 
+const getCompanyById = async (req, res) => {
+  const id = Number(req.params._id);
+  try {
+    await client.connect();
+    const company = await db.collection("companies").findOne({ _id: id });
+
+    company
+      ? res.status(200).json({ status: 200, data: company, message: "Request successful" })
+      : res.status(404).json({ status: 404, data: id, message: "Company not found" });
+  } catch (err) {
+    res.status(500).json({ status: 500, data: id, message: "Server error" });
+  }
+  client.close();
+};
+
 module.exports = {
   getItems,
   getItemById,
   getItemsByCategory,
   getItemsByBodyLocation,
   placeOrder,
+  getCompanyById,
 };
