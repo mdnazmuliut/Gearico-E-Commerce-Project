@@ -4,6 +4,7 @@ import GlobalStyles from "./GlobalStyles";
 import Home from "./Home/Home";
 import Products from "./Products";
 import SingleProduct from "./SingleProduct/SingleProduct";
+import Cart from "./Cart/Cart";
 
 const App = () => {
   return (
@@ -20,6 +21,9 @@ const App = () => {
           </Route>
           <Route path="/products">
             <Products />
+          </Route>
+          <Route path="/cart">
+            <Cart />
           </Route>
         </Switch>
       </BrowserRouter>
