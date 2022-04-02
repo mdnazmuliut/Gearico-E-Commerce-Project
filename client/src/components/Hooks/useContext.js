@@ -1,9 +1,11 @@
 import { createContext, useState, useEffect } from "react";
+import usePersistedState from "./usePersistedState";
 
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
+  const [cart, setCart] = usePersistedState([], "cart");
 
   useEffect(() => {
     fetch("/api/get-items")
@@ -13,7 +15,9 @@ export const DataProvider = ({ children }) => {
       });
   }, []);
 
+  console.log("Cart updated!", cart);
+
   return (
-    <DataContext.Provider value={{ data }}>{children}</DataContext.Provider>
+    <DataContext.Provider value={{ data, cart, setCart }}>{children}</DataContext.Provider>
   );
 };

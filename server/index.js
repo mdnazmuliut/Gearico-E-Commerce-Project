@@ -11,6 +11,7 @@ const {
   getItemsByCategory,
   getItemsByBodyLocation,
   placeOrder,
+  getCompanyById,
 } = require("./handlersLocal");
 
 express()
@@ -36,6 +37,7 @@ express()
   .get("/api/get-item/:_id", getItemById)
   .get("/api/get-items/cat/:cat", getItemsByCategory)
   .get("/api/get-items/location/:location", getItemsByBodyLocation)
+  .get("/api/get-company/:_id", getCompanyById)
   .post("/api/place-order", placeOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
