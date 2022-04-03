@@ -6,9 +6,28 @@ const Billing = ({
   formData,
   handleChange,
   handleClick,
+  //   handleClickNext,
+  handleClickBack,
   disabled,
   subStatus,
+  billingData,
+  inputDisplay,
+  setInputDisplay,
 }) => {
+  const handleClickNext = () => {
+    // ev.preventDefault();
+    let goNextPage = true;
+
+    Object.values(billingData).forEach((value) => {
+      value === "" && (goNextPage = false);
+    });
+
+    if (goNextPage === true) {
+      inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
+    }
+    console.log("Object Value in billing:", Object.values(billingData));
+  };
+
   return (
     <>
       <Main>
@@ -62,6 +81,10 @@ const Billing = ({
           </FormContent>
         </Wrapper>
       </Main>
+      <ButtonWrapper>
+        <ButtonBack onClick={handleClickBack}>Back</ButtonBack>
+        <ButtonNext onClick={handleClickNext}>Next</ButtonNext>
+      </ButtonWrapper>
     </>
   );
 };
@@ -102,6 +125,29 @@ const FormGroup = styled.div`
       margin-right: 6px;
     }
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+`;
+const ButtonBack = styled.button`
+  border: none;
+  border-radius: 10px;
+  color: black;
+  width: 100px;
+  font-size: 18px;
+  cursor: pointer;
+`;
+const ButtonNext = styled.button`
+  border: none;
+  border-radius: 10px;
+  color: black;
+  margin-left: 20px;
+  width: 100px;
+  font-size: 18px;
+  cursor: pointer;
 `;
 
 export default Billing;

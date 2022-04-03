@@ -6,6 +6,7 @@ const Shipping = ({
   formData,
   handleChange,
   handleClick,
+  handleClickNext,
   disabled,
   subStatus,
 }) => {
@@ -24,7 +25,7 @@ const Shipping = ({
                 placeholder="First name"
                 defaultValue={formData.firstName}
                 handleChange={handleChange}
-                required
+                // {required:true}
               />
               <Input
                 name="lastName"
@@ -37,7 +38,7 @@ const Shipping = ({
             </FormGroup>
             <Input
               name="email"
-              type="text"
+              type="email"
               placeholder="Email"
               defaultValue={formData.email}
               handleChange={handleChange}
@@ -91,11 +92,14 @@ const Shipping = ({
           </FormContent>
         </Wrapper>
       </Main>
+      <ButtonWrapper>
+        <ButtonNext onClick={handleClickNext}>Next</ButtonNext>
+      </ButtonWrapper>
     </>
   );
 };
 
-const Main = styled.div`
+const Main = styled.form`
   margin: 20px;
   /* padding: 10px; */
   width: 500px;
@@ -111,7 +115,7 @@ const Header = styled.div`
   color: black;
 `;
 
-const Wrapper = styled.form`
+const Wrapper = styled.div`
   margin: 20px;
   padding: 0 20px;
 `;
@@ -131,6 +135,22 @@ const FormGroup = styled.div`
       margin-right: 6px;
     }
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+`;
+
+const ButtonNext = styled.button`
+  border: none;
+  border-radius: 10px;
+  color: black;
+  margin-left: 20px;
+  width: 100px;
+  font-size: 18px;
+  cursor: pointer;
 `;
 
 export default Shipping;

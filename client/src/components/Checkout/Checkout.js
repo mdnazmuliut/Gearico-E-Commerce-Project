@@ -8,7 +8,23 @@ import { NavLink } from "react-router-dom";
 
 const Checkout = () => {
   const [inputDisplay, setInputDisplay] = useState(1);
+
   const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    province: "",
+    postcode: "",
+    country: "",
+    fullName: "",
+    cardNo: "",
+    expMonth: "",
+    expYear: "",
+    cvv: "",
+  };
+
+  const initialShippingState = {
     firstName: "",
     lastName: "",
     email: "",
@@ -18,20 +34,36 @@ const Checkout = () => {
     country: "",
   };
 
+  const initialBillingState = {
+    fullName: "",
+    cardNo: "",
+    expMonth: "",
+    expYear: "",
+    cvv: "",
+  };
+
   const [formData, setFormData] = useState(initialState);
   const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
 
+  const [shippingData, setShippingData] = useState(initialShippingState);
+  const [billingData, setBillingData] = useState(initialBillingState);
+
   const handleClickNext = () => {
+    // ev.preventDefault();
     let goNextPage = true;
-    console.log("Object Vaue:", Object.values(formData));
-    Object.values(formData).forEach((value) => {
+
+    Object.values(shippingData).forEach((value) => {
       value === "" && (goNextPage = false);
     });
 
     if (goNextPage === true) {
       inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
     }
+    // console.log(
+    //   "Object Value Shipping in checkout:",
+    //   Object.values(shippingData)
+    // );
   };
   const handleClickBack = () => {
     inputDisplay > 1 && setInputDisplay(inputDisplay - 1);
@@ -39,8 +71,36 @@ const Checkout = () => {
 
   const handleChange = (value, name) => {
     setFormData({ ...formData, [name]: value });
+
+    setShippingData({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      address: formData.address,
+      province: formData.province,
+      postcode: formData.postcode,
+      country: formData.country,
+    });
+
+    setBillingData({
+      fullName: formData.fullName,
+      cardNo: formData.cardNo,
+      expMonth: formData.expMonth,
+      expYear: formData.expYear,
+      cvv: formData.cvv,
+    });
+    console.log(
+      "Shipping Object Value HandleChange:",
+      Object.values(shippingData)
+    );
+    console.log(
+      "Billing Object Value HandleChange:",
+      Object.values(billingData)
+    );
   };
+
   console.log("formadata:", formData);
+
   const handleClick = (ev) => {
     ev.preventDefault();
     setSubStatus("pending");
@@ -69,9 +129,18 @@ const Checkout = () => {
     <>
       <CheckoutContents>
         <StepsHead>
-          <div>Shipping</div>
-          <div>Billing</div>
-          <div>Review</div>
+          <StepCircle>
+            <Circle>1</Circle>
+            <div>Shipping</div>
+          </StepCircle>
+          <StepCircle>
+            <Circle>2</Circle>
+            <div>Billing</div>
+          </StepCircle>
+          <StepCircle>
+            <Circle>3</Circle>
+            <div>Review</div>
+          </StepCircle>
         </StepsHead>
         <Main>
           <InputSection>
@@ -80,6 +149,7 @@ const Checkout = () => {
                 formData={formData}
                 handleChange={handleChange}
                 handleClick={handleClick}
+                handleClickNext={handleClickNext}
                 subStatus={subStatus}
               />
             )}
@@ -88,24 +158,33 @@ const Checkout = () => {
                 formData={formData}
                 handleChange={handleChange}
                 handleClick={handleClick}
+                handleClickBack={handleClickBack}
                 subStatus={subStatus}
+                billingData={billingData}
+                inputDisplay={inputDisplay}
+                setInputDisplay={setInputDisplay}
               />
             )}
-            {inputDisplay === 3 && <Review formData={formData} />}
-            <ButtonWrapper>
+            {inputDisplay === 3 && (
+              <Review formData={formData} handleClickBack={handleClickBack} />
+            )}
+            {/* <ButtonWrapper>
               <ButtonBack onClick={handleClickBack}>Back</ButtonBack>
               <ButtonNext onClick={handleClickNext}>Next</ButtonNext>
-            </ButtonWrapper>
+            </ButtonWrapper> */}
           </InputSection>
           <CartInfo />
         </Main>
-        <PlaceOrderBtn>Place Order</PlaceOrderBtn>
+        <PlaceOrderBtn onClick={handleClick}>Place Order</PlaceOrderBtn>
       </CheckoutContents>
     </>
   );
 };
 
-const CheckoutContents = styled.div``;
+const CheckoutContents = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const Main = styled.div`
   display: flex;
   flex-direction: row;
@@ -119,6 +198,23 @@ const StepsHead = styled.div`
   justify-content: space-around;
   font-size: 24px;
 `;
+
+const StepCircle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Circle = styled.div`
+  margin-bottom: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  background-color: palevioletred;
+`;
+
 const InputSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -148,10 +244,12 @@ const ButtonNext = styled.button`
   cursor: pointer;
 `;
 const PlaceOrderBtn = styled.button`
+  margin: auto;
   border: none;
-  border-radius: 10px;
+  border-radius: 40px;
   color: black;
-  width: 100px;
+  width: 200px;
+  height: 50px;
   font-size: 18px;
   cursor: pointer;
   text-align: center;
