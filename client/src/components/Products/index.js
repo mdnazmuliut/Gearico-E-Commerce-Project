@@ -4,12 +4,19 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import ProductPreview from "./ProductPreview";
 import PageSelect from "./PageSelect";
+import { useParams } from "react-router-dom";
 
 const Products = () => {
   const [catSelection, setCatSelection] = useState(null);
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const catParam = useParams().category
+  useEffect(()=>{
+    setCurrentPage(1);
+    setCatSelection(catParam);
+  }, [catParam])
 
   // setting the start point for the product fetch, based on the selected page #
   const startPoint = currentPage * 10 - 10;

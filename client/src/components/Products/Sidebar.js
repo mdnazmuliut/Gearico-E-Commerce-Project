@@ -1,26 +1,20 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const Sidebar = ({ setCatSelection, setSidebarToggle, setCurrentPage }) => {
-  
-  const handleClick = (ev) => {
-    if (ev.target.value) {
-      setCatSelection(ev.target.value);
-      setCurrentPage(1);
-    }
-  }
+const Sidebar = ({ setSidebarToggle }) => {
   
   return (
     <Wrapper>
       <NavBar>
         <Title onClick={() => setSidebarToggle(false)}>CATEGORIES</Title>
-        <List onClick={(ev) => handleClick(ev)}>
-          <li><Button value={"Entertainment"}>Entertainment</Button></li>
-          <li><Button value={"Fitness"}>Fitness</Button></li>
-          <li><Button value={"Gaming"}>Gaming</Button></li>
-          <li><Button value={"Industrial"}>Industrial</Button></li>
-          <li><Button value={"Lifestyle"}>Lifestyle</Button></li>
-          <li><Button value={"Medical"}>Medical</Button></li>
-          <li><Button value={"Pets and Animals"}>Pets and Animals</Button></li>
+        <List>
+          <li><CatLink to={"/products/Entertainment"}>Entertainment</CatLink></li>
+          <li><CatLink to={"/products/Fitness"}>Fitness</CatLink></li>
+          <li><CatLink to={"/products/Gaming"}>Gaming</CatLink></li>
+          <li><CatLink to={"/products/Industrial"}>Industrial</CatLink></li>
+          <li><CatLink to={"/products/Lifestyle"}>Lifestyle</CatLink></li>
+          <li><CatLink to={"/products/Medical"}>Medical</CatLink></li>
+          <li><CatLink to={"/products/Pets and Animals"}>Pets and Animals</CatLink></li>
         </List>
       </NavBar>
     </Wrapper>
@@ -54,7 +48,7 @@ const List = styled.ul`
   }
 `;
 
-const Button = styled.button`
+const CatLink = styled(Link)`
   background: none;
   border: none;
   color: #000;
