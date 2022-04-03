@@ -10,7 +10,7 @@ const PageSelect = ({ currentPage, setCurrentPage, numProducts }) => {
   return (
     <Wrapper
       onClick={(ev) =>
-        (ev.target.value == -1 || ev.target.value == 1) &&
+        (ev.target.value === "-1" || ev.target.value === "1") &&
         setCurrentPage(currentPage + Number(ev.target.value))
       }
     >
