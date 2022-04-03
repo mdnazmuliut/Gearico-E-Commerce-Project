@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
-const Input = ({ name, type, placeholder, handleChange, defaultValue }) => {
+const Input = ({ name, type, placeholder, handleChange, defaultValue, section }) => {
   return (
     <Wrapper>
       <label htmlFor={name}>{placeholder}</label>
       <input
         type={type}
         name={name}
+        section={section}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        onChange={(ev) => handleChange(ev.target.value, name)}
+        onChange={(ev) => handleChange(ev.target.value, name, section)}
       />
     </Wrapper>
   );

@@ -5,70 +5,67 @@ import Input from "./Input";
 const Shipping = ({
   formData,
   handleChange,
-  handleClick,
   handleClickNext,
-  disabled,
-  subStatus,
 }) => {
+
+  const section="shipping";
+
   return (
     <>
       <Main>
         <Header>Shipping Address</Header>
         <Wrapper>
           <FormContent>
-            {/* <h1>Order Form</h1>
-            <h2>Provide your information</h2> */}
             <FormGroup>
               <Input
                 name="firstName"
                 type="text"
                 placeholder="First name"
-                defaultValue={formData.firstName}
+                section={section}
+                defaultValue={formData.shipping.firstName}
                 handleChange={handleChange}
-                // {required:true}
               />
               <Input
                 name="lastName"
                 type="text"
                 placeholder="Last name"
-                defaultValue={formData.lastName}
+                section={section}
+                defaultValue={formData.shipping.lastName}
                 handleChange={handleChange}
-                required
               />
             </FormGroup>
             <Input
               name="email"
               type="email"
               placeholder="Email"
-              defaultValue={formData.email}
+              section={section}
+              defaultValue={formData.shipping.email}
               handleChange={handleChange}
-              required
             />
-            {/* <h2>Shipping Address</h2> */}
             <Input
               name="address"
               type="address"
               placeholder="Address"
-              defaultValue={formData.address}
+              section={section}
+              defaultValue={formData.shipping.address}
               handleChange={handleChange}
-              required
             />
             <FormGroup>
               <Input
                 name="city"
                 type="text"
                 placeholder="City"
-                defaultValue={formData.city}
+                section={section}
+                defaultValue={formData.shipping.city}
                 handleChange={handleChange}
-                required
               />
               <Input
                 name="province"
                 type="text"
                 placeholder="Province"
-                defaultValue={formData.province}
+                section={section}
+                defaultValue={formData.shipping.province}
                 handleChange={handleChange}
-                required
               />
             </FormGroup>
             <FormGroup>
@@ -76,24 +73,24 @@ const Shipping = ({
                 name="postcode"
                 type="text"
                 placeholder="Postal Code"
-                defaultValue={formData.postcode}
+                section={section}
+                defaultValue={formData.shipping.postcode}
                 handleChange={handleChange}
-                required
               />
               <Input
                 name="country"
                 type="text"
                 placeholder="Country"
-                defaultValue={formData.country}
+                section={section}
+                defaultValue={formData.shipping.country}
                 handleChange={handleChange}
-                required
               />
             </FormGroup>
           </FormContent>
         </Wrapper>
       </Main>
       <ButtonWrapper>
-        <ButtonNext onClick={handleClickNext}>Next</ButtonNext>
+        <ButtonNext onClick={(ev) => handleClickNext(ev, section)}>Next</ButtonNext>
       </ButtonWrapper>
     </>
   );
