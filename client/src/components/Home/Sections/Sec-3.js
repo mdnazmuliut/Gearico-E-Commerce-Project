@@ -22,7 +22,7 @@ const SectionThree = () => {
           return (
             <>
               <FeaturedProductsWrap
-                onClick={() => history.push(`/products/${item._id}`)}
+                onClick={() => history.push(`/products/id/${item._id}`)}
               >
                 <ProductImg src={item.imageSrc} />
               </FeaturedProductsWrap>

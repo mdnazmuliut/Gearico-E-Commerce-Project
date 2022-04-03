@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ProductPreview = ({ productInfo }) => {
   return (
-    <Wrapper to={`/products/${productInfo._id}`}>
+    <Wrapper to={`/products/id/${productInfo._id}`}>
       <ImageWrapper>
         <Img src={productInfo.imageSrc} />
         <Text>
