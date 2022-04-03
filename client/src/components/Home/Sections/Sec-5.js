@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
+import { useContext } from "react";
+import { DataContext } from "../../Hooks/useContext";
+
 const SectionFive = () => {
+  const { data } = useContext(DataContext);
+
+  if (!data) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Footer>
       <Wrapper>
@@ -11,8 +20,9 @@ const SectionFive = () => {
 };
 
 const Footer = styled.footer`
-  background-color: lightgray;
+  background-color: #050503;
   height: 70px;
+  font-family: "Raleway", sans-serif;
   position: relative;
 `;
 
@@ -27,6 +37,7 @@ const Wrapper = styled.div`
 const Credits = styled.p`
   text-align: center;
   margin: auto;
+  color: grey;
 `;
 
 export default SectionFive;

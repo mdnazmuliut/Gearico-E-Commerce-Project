@@ -13,6 +13,7 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyles />
         <Header />
+        <div style={{ height: "80px" }} />
         <Switch>
           <Route exact path="/">
             <Home />
