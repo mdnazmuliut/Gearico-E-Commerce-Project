@@ -19,7 +19,7 @@ const Header = () => {
                 <LinkNav href="/">Contact</LinkNav>
               </NavItem>
               <NavItem>
-                <LinkNav href="/">Cart</LinkNav>
+                <LinkNav href="/cart">Cart</LinkNav>
               </NavItem>
             </NavList>
           </NavMenu>

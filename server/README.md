@@ -6,7 +6,11 @@ Endpoints:
 
 - GET "/api/get-item/:id" - requires the item id in params, returns an object with all the item data
 
+<<<<<<< Updated upstream
 - GET "/api/get-items/:cat" - requires the category name in params, returns an array of all items in that category. Categories are: "Fitness, Medical, Lifestyle, Entertainment, Gaming, Industrial, Pets and Animals". CASE SENSITIVE! Pets and Animals can be formated either ("/api/get-items/Pets and Animals") or ("/api/get-items/Pets%20and%20Animals").
+=======
+- GET "/api/get-items/:cat" - requires the category name in params, returns an array of all items in that category. Categories are: "fitness, medical, lifestyle, entertainment, gaming, industrial, pets and animals".
+>>>>>>> Stashed changes
 
 - GET "/api/get-items/:location" - requires the body location in params, returns an array of all items for that location. Locations include: "Wrist, Arms, Head, Chest, Waist, Neck". CASE SENSITIVE! Must capitalize first letters.
 
