@@ -17,12 +17,19 @@ const SingleProduct = () => {
     fetch(`/api/get-item/${productId}`)
       .then((res) => res.json())
       .then((data) => setProductInfo(data.data))
-      .catch(err => console.log("error:", err));
+      .catch((err) => console.log("error:", err));
   }, []);
 
   // updating the cart with product info, quanity and total price
   const handleClick = () => {
-    setCart([...cart, { productInfo, qnt: quantity, itemTotal: calcItemTotal(productInfo.price, quantity) }]);
+    setCart([
+      ...cart,
+      {
+        productInfo,
+        qnt: quantity,
+        itemTotal: calcItemTotal(productInfo.price, quantity),
+      },
+    ]);
     history.push("/cart");
   };
 
@@ -46,7 +53,9 @@ const SingleProduct = () => {
           <InfoBox>
             <h4>From: {productInfo.companyId}</h4>
             <h4>Category: {productInfo.category}</h4>
-            <Price>${calcItemTotal(productInfo.price, quantity).toFixed(2)}</Price>
+            <Price>
+              ${calcItemTotal(productInfo.price, quantity).toFixed(2)}
+            </Price>
           </InfoBox>
           <QuantityBox>
             Quantity:

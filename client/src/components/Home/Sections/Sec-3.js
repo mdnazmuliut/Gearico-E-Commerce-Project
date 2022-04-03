@@ -38,7 +38,6 @@ const Section = styled.section`
   padding: 7rem 0 2rem;
   height: auto;
   width: 100vw;
-  background-color: #050503;
   font-family: "Raleway", sans-serif;
   display: grid;
   overflow: hidden;

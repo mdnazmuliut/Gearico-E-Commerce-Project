@@ -20,7 +20,6 @@ const SectionFive = () => {
 };
 
 const Footer = styled.footer`
-  background-color: #050503;
   height: 70px;
   font-family: "Raleway", sans-serif;
   position: relative;

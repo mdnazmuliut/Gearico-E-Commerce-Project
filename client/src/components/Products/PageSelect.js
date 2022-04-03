@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const PageSelect = ({ currentPage, setCurrentPage, numProducts }) => {
-
   // disabling the back button if on the first page of results
   const backDisable = currentPage === 1 ? true : false;
   // disabling the next button if on the last page of results
@@ -28,6 +27,10 @@ const PageSelect = ({ currentPage, setCurrentPage, numProducts }) => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  border: 3px solid white;
+  padding: 20px;
 `;
 
 const ButtonBack = styled.button`

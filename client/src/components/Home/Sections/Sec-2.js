@@ -1,6 +1,9 @@
+import styled from "styled-components";
+
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
+import { DataContext } from "../../Hooks/useContext";
+
 import Entertainment from "../../../assets/Categories/Entertainment.jpg";
 import Fitness from "../../../assets/Categories/Fitness.jpg";
 import Gaming from "../../../assets/Categories/Gaming.jpg";
@@ -8,16 +11,11 @@ import Industrial from "../../../assets/Categories/Industrial.jpg";
 import Lifestyle from "../../../assets/Categories/Lifestyle.jpg";
 import Medical from "../../../assets/Categories/Medical.jpg";
 import PetsAnimals from "../../../assets/Categories/PetsAnimals.jpg";
-import { DataContext } from "../../Hooks/useContext";
 
 const SectionTwo = () => {
   const { data } = useContext(DataContext);
 
   const history = useHistory();
-
-  const categoryHandler = (cat) => {
-    history.push(`/api/get-items/cat/${cat}`);
-  };
 
   if (!data) {
     return <p>Loading...</p>;
@@ -29,43 +27,45 @@ const SectionTwo = () => {
       <Wrapper>
         <CategoryWrap>
           <CategImg src={Entertainment} />
-          <CategContent onClick={() => categoryHandler(data[5].category)}>
+          <CategContent onClick={() => history.push("/products/Entertainment")}>
             <CategTitle>Entertainment</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
           <CategImg src={Fitness} />
-          <CategContent onClick={() => categoryHandler(data[0].category)}>
+          <CategContent onClick={() => history.push("/products/Fitness")}>
             <CategTitle>Fitness</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
           <CategImg src={Gaming} />
-          <CategContent onClick={() => categoryHandler(data[341].category)}>
+          <CategContent onClick={() => history.push("/products/Gaming")}>
             <CategTitle>Gaming</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
           <CategImg src={Industrial} />
-          <CategContent onClick={() => categoryHandler(data[58].category)}>
+          <CategContent onClick={() => history.push("/products/Industrial")}>
             <CategTitle>Industrial</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
           <CategImg src={Lifestyle} />
-          <CategContent onClick={() => categoryHandler(data[3].category)}>
+          <CategContent onClick={() => history.push("/products/Lifestyle")}>
             <CategTitle>Lifestyle</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
           <CategImg src={Medical} />
-          <CategContent onClick={() => categoryHandler(data[2].category)}>
+          <CategContent onClick={() => history.push("/products/Medical")}>
             <CategTitle>Medical</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
           <CategImg src={PetsAnimals} />
-          <CategContent onClick={() => categoryHandler(data[142].category)}>
+          <CategContent
+            onClick={() => history.push("/products/Pets and Animals")}
+          >
             <CategTitle>Pets and Animals</CategTitle>
           </CategContent>
         </CategoryWrap>
@@ -78,7 +78,6 @@ const Section = styled.section`
   padding: 7rem 0 2rem;
   height: auto;
   width: 100vw;
-  background-color: #050503;
   display: grid;
   font-family: "Raleway", sans-serif;
 `;
