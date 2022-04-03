@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+// import ent from "../../assets/SidebarCats/Entertainment.png";
+import { TiThMenuOutline } from "react-icons/ti";
 import Sidebar from "./Sidebar";
 import ProductPreview from "./ProductPreview";
 import PageSelect from "./PageSelect";
@@ -12,11 +14,11 @@ const Products = () => {
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const catParam = useParams().category
-  useEffect(()=>{
+  const catParam = useParams().category;
+  useEffect(() => {
     setCurrentPage(1);
     setCatSelection(catParam);
-  }, [catParam])
+  }, [catParam]);
 
   // setting the start point for the product fetch, based on the selected page #
   const startPoint = currentPage * 10 - 10;
@@ -25,15 +27,15 @@ const Products = () => {
   const numItems = 10;
 
   useEffect(() => {
-
     // fetching category-specific items if a category has been selected...
     if (catSelection) {
-      fetch(`/api/get-items/cat/${catSelection}?start=${startPoint}&limit=${numItems}`)
+      fetch(
+        `/api/get-items/cat/${catSelection}?start=${startPoint}&limit=${numItems}`
+      )
         .then((res) => res.json())
         .then((data) => setProducts(data.data))
         .catch((err) => console.log("error:", err));
     } else {
-
       // ...otherwise, fetching all items
       fetch(`/api/get-items?start=${startPoint}&limit=${numItems}`)
         .then((res) => res.json())
@@ -55,12 +57,13 @@ const Products = () => {
         />
       ) : (
         <SidebarButton onClick={() => setSidebarToggle(true)}>
-          sidebar
+          <TiThMenuOutline /> *****
         </SidebarButton>
       )}
       <MainDiv>
         <TitleDiv cat={catSelection}>
           <h1>{catSelection || "Products"}</h1>
+          {/* <img src={ent} alt="" /> */}
         </TitleDiv>
         <ProductsGrid>
           {products.map((product) => {
@@ -105,6 +108,11 @@ const SidebarButton = styled.button`
   height: auto;
   cursor: pointer;
   position: absolute;
+  /* position: fixed; */
+  top: 200px;
+  outline: none;
+  border: none;
+  font-size: 20px;
 `;
 
 const ProductsGrid = styled.div`
@@ -112,6 +120,7 @@ const ProductsGrid = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  /* flex: 5 0 20%; */
 `;
 
 const PageDiv = styled.div``;

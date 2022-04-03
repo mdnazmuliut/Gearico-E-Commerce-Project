@@ -38,7 +38,6 @@ const SectionFour = () => {
 
 const Section = styled.section`
   padding: 50px 0;
-  background-color: #050503;
 `;
 
 const Wrapper = styled.div`

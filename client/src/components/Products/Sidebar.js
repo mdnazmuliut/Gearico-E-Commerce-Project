@@ -2,19 +2,34 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ setSidebarToggle }) => {
-  
   return (
     <Wrapper>
       <NavBar>
         <Title onClick={() => setSidebarToggle(false)}>CATEGORIES</Title>
         <List>
-          <li><CatLink to={"/products/Entertainment"}>Entertainment</CatLink></li>
-          <li><CatLink to={"/products/Fitness"}>Fitness</CatLink></li>
-          <li><CatLink to={"/products/Gaming"}>Gaming</CatLink></li>
-          <li><CatLink to={"/products/Industrial"}>Industrial</CatLink></li>
-          <li><CatLink to={"/products/Lifestyle"}>Lifestyle</CatLink></li>
-          <li><CatLink to={"/products/Medical"}>Medical</CatLink></li>
-          <li><CatLink to={"/products/Pets and Animals"}>Pets and Animals</CatLink></li>
+          <li>
+            <CatLink to={"/products/Entertainment"}>Entertainment</CatLink>
+          </li>
+          <li>
+            <CatLink to={"/products/Fitness"}>Fitness</CatLink>
+          </li>
+          <li>
+            <CatLink to={"/products/Gaming"}>Gaming</CatLink>
+          </li>
+          <li>
+            <CatLink to={"/products/Industrial"}>Industrial</CatLink>
+          </li>
+          <li>
+            <CatLink to={"/products/Lifestyle"}>Lifestyle</CatLink>
+          </li>
+          <li>
+            <CatLink to={"/products/Medical"}>Medical</CatLink>
+          </li>
+          <li>
+            <CatLink to={"/products/Pets and Animals"}>
+              Pets and Animals
+            </CatLink>
+          </li>
         </List>
       </NavBar>
     </Wrapper>
@@ -23,6 +38,9 @@ const Sidebar = ({ setSidebarToggle }) => {
 
 const Wrapper = styled.div`
   background-color: #fff;
+  /* position: absolute;
+  height: auto;
+  top: 200px; */
 `;
 
 const NavBar = styled.div`
