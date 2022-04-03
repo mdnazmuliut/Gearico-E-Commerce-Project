@@ -12,6 +12,7 @@ export const DataProvider = ({ children }) => {
     fetch("/api/get-items")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.data);
         setData(data.data);
       });
   }, []);

@@ -1,26 +1,35 @@
 import styled from "styled-components";
 
+import { useContext } from "react";
+import { DataContext } from "../../Hooks/useContext";
+
 import amazon from "../../../assets/Sponsors/sponsors2.png";
 import shopify from "../../../assets/Sponsors/sponsors3.png";
 import paypal from "../../../assets/Sponsors/sponsors4.png";
 import slack from "../../../assets/Sponsors/sponsors5.png";
 
 const SectionFour = () => {
+  const { data } = useContext(DataContext);
+
+  if (!data) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Section>
       {/* <Title>Find Us On</Title> */}
       <Wrapper>
-        <SponsorWrap>
-          <SponsorImg src={amazon} alt="" class="sponsor__img" />
+        <SponsorWrap target="_blank" href="https://www.amazon.com/">
+          <SponsorImg src={amazon} alt="Amazon" class="sponsor__img" />
         </SponsorWrap>
-        <SponsorWrap>
-          <SponsorImg src={shopify} alt="" class="sponsor__img" />
+        <SponsorWrap target="_blank" href="https://www.shopify.com/">
+          <SponsorImg src={shopify} alt="Shopify" class="sponsor__img" />
         </SponsorWrap>
-        <SponsorWrap>
-          <SponsorImg src={paypal} alt="" class="sponsor__img" />
+        <SponsorWrap target="_blank" href="https://www.paypal.com/">
+          <SponsorImg src={paypal} alt="PayPal" class="sponsor__img" />
         </SponsorWrap>
-        <SponsorWrap>
-          <SponsorImg src={slack} alt="" class="sponsor__img" />
+        <SponsorWrap target="_blank" href="https://www.slack.com/">
+          <SponsorImg src={slack} alt="Slack" class="sponsor__img" />
         </SponsorWrap>
       </Wrapper>
     </Section>
@@ -28,10 +37,8 @@ const SectionFour = () => {
 };
 
 const Section = styled.section`
-  /* padding: 7rem 0 2rem; */
   padding: 50px 0;
-  /* height: auto; */
-  background-color: black;
+  background-color: #050503;
 `;
 
 const Wrapper = styled.div`
@@ -47,12 +54,16 @@ const Wrapper = styled.div`
 
 // const Title = styled.h2``;
 
-const SponsorWrap = styled.div``;
+const SponsorWrap = styled.a``;
 
 const SponsorImg = styled.img`
   width: 90px;
   filter: invert(0.7);
-  transition: 0.3s;
+  transition: 0.2s ease-in;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 export default SectionFour;

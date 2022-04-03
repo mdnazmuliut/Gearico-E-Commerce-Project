@@ -1,10 +1,23 @@
 import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Entertainment from "../../../assets/Categories/Entertainment.jpg";
+import Fitness from "../../../assets/Categories/Fitness.jpg";
+import Gaming from "../../../assets/Categories/Gaming.jpg";
+import Industrial from "../../../assets/Categories/Industrial.jpg";
+import Lifestyle from "../../../assets/Categories/Lifestyle.jpg";
+import Medical from "../../../assets/Categories/Medical.jpg";
+import PetsAnimals from "../../../assets/Categories/PetsAnimals.jpg";
 import { DataContext } from "../../Hooks/useContext";
 
 const SectionTwo = () => {
   const { data } = useContext(DataContext);
+
+  const history = useHistory();
+
+  const categoryHandler = (cat) => {
+    history.push(`/api/get-items/cat/${cat}`);
+  };
 
   if (!data) {
     return <p>Loading...</p>;
@@ -16,43 +29,43 @@ const SectionTwo = () => {
       <Wrapper>
         <CategoryWrap>
           <CategImg src={Entertainment} />
-          <CategContent>
+          <CategContent onClick={() => categoryHandler(data[5].category)}>
             <CategTitle>Entertainment</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
-          <CategImg src={Entertainment} />
-          <CategContent>
+          <CategImg src={Fitness} />
+          <CategContent onClick={() => categoryHandler(data[0].category)}>
             <CategTitle>Fitness</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
-          <CategImg src={Entertainment} />
-          <CategContent>
+          <CategImg src={Gaming} />
+          <CategContent onClick={() => categoryHandler(data[341].category)}>
             <CategTitle>Gaming</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
-          <CategImg src={Entertainment} />
-          <CategContent>
+          <CategImg src={Industrial} />
+          <CategContent onClick={() => categoryHandler(data[58].category)}>
             <CategTitle>Industrial</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
-          <CategImg src={Entertainment} />
-          <CategContent>
+          <CategImg src={Lifestyle} />
+          <CategContent onClick={() => categoryHandler(data[3].category)}>
             <CategTitle>Lifestyle</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
-          <CategImg src={Entertainment} />
-          <CategContent>
+          <CategImg src={Medical} />
+          <CategContent onClick={() => categoryHandler(data[2].category)}>
             <CategTitle>Medical</CategTitle>
           </CategContent>
         </CategoryWrap>
         <CategoryWrap>
-          <CategImg src={Entertainment} />
-          <CategContent>
+          <CategImg src={PetsAnimals} />
+          <CategContent onClick={() => categoryHandler(data[142].category)}>
             <CategTitle>Pets and Animals</CategTitle>
           </CategContent>
         </CategoryWrap>
@@ -65,8 +78,9 @@ const Section = styled.section`
   padding: 7rem 0 2rem;
   height: auto;
   width: 100vw;
-  background-color: grey;
+  background-color: #050503;
   display: grid;
+  font-family: "Raleway", sans-serif;
 `;
 
 const Wrapper = styled.div`
@@ -87,11 +101,15 @@ const Title = styled.h2`
 const CategoryWrap = styled.div`
   height: 263px;
   position: relative;
+  border-radius: 15px;
 `;
 
 const CategImg = styled.img`
-  max-width: 263px;
-  width: 150px;
+  border-radius: 15px;
+  max-width: 205px;
+  width: 205px;
+  object-fit: cover;
+  height: 248px;
 `;
 
 const CategContent = styled.div`
@@ -103,13 +121,21 @@ const CategContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0.75rem 0.75rem 1rem;
+  border-radius: 15px;
+  cursor: pointer;
 `;
 
 const CategTitle = styled.p`
   font-size: 1.25rem;
   text-align: center;
   margin-bottom: 0.25rem;
+  letter-spacing: 3px;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding: 15px;
 `;
 
 export default SectionTwo;
