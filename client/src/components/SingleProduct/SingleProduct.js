@@ -3,10 +3,10 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { DataContext } from "../Hooks/useContext";
 
-const SingleProduct = ({}) => {
+const SingleProduct = () => {
   const [productInfo, setProductInfo] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { setCart, cart } = useContext(DataContext);
+  const { setCart, cart, calcItemTotal } = useContext(DataContext);
   const history = useHistory();
 
   // getting product id from params
@@ -20,9 +20,9 @@ const SingleProduct = ({}) => {
       .catch(err => console.log("error:", err));
   }, []);
 
-  // updating the cart with product info and quanity
+  // updating the cart with product info, quanity and total price
   const handleClick = () => {
-    setCart([...cart, { productInfo, qnt: quantity }]);
+    setCart([...cart, { productInfo, qnt: quantity, itemTotal: calcItemTotal(productInfo.price, quantity) }]);
     history.push("/cart");
   };
 
@@ -46,7 +46,7 @@ const SingleProduct = ({}) => {
           <InfoBox>
             <h4>From: {productInfo.companyId}</h4>
             <h4>Category: {productInfo.category}</h4>
-            <Price>{productInfo.price}</Price>
+            <Price>${calcItemTotal(productInfo.price, quantity).toFixed(2)}</Price>
           </InfoBox>
           <QuantityBox>
             Quantity:
