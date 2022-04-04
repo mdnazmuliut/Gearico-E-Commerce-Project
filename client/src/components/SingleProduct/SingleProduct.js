@@ -26,7 +26,7 @@ const SingleProduct = () => {
       ...cart,
       {
         productInfo,
-        qnt: quantity,
+        qnt: Number(quantity),
         itemTotal: calcItemTotal(productInfo.price, quantity),
       },
     ]);

@@ -150,20 +150,31 @@ const placeOrder = async (req, res) => {
 
     // const { firstName, lastName, email, address } = reqInfo;
 
+    const newValues = {
+      _id: uuidv4(),
+      shipping: reqInfo.shipping,
+      billing: reqInfo.billing,
+      orderInfo: reqInfo.order,
+    };
     // const newValues = {
     //   _id: uuidv4(),
-    //   customerInfo: {
-    //     firstName: reqInfo.customerInfo.firstName,
-    //     lastName: reqInfo.customerInfo.lastName,
-    //     email: reqInfo.customerInfo.email,
-    //     address: reqInfo.customerInfo.address,
-    //   },
-    //   orderInfo: reqInfo.orderInfo,
-    //   creditInfo: reqInfo.creditInfo,
+    //   customerInfo: reqInfo.shipping,
+    //   //   {
+    //   //     firstName: reqInfo.shipping.firstName,
+    //   //     lastName: reqInfo.shipping.lastName,
+    //   //     email: reqInfo.shipping.email,
+    //   //     address: reqInfo.shipping.address,
+    //   //     province: reqInfo.shipping.province,
+    //   //     postcode: reqInfo.shipping.postcode,
+    //   //     country: reqInfo.shipping.country,
+    //   //     city: reqInfo.shipping.city,
+    //   //   },
+    //   orderInfo: reqInfo.order,
+    //   creditInfo: reqInfo.billing,
     // };
 
     //=====Post order inside "orders" collection=====
-    // const data = await db.collection("orders").insertOne(newValues);
+    const data = await db.collection("orders").insertOne(newValues);
 
     // const items = await db.collection("items").find().toArray();
     // const orders = await db.collection("orders").find().toArray();
@@ -177,24 +188,24 @@ const placeOrder = async (req, res) => {
     //   if (orderId.includes(item._id)) itemList.push(item);
     // });
 
-    // const promises = [];
+    const promises = [];
 
-    // await reqInfo.orderInfo.forEach((el) => {
-    //   promises.push(
-    //     db
-    //       .collection("items")
-    //       .updateOne({ _id: el._id }, { $inc: { numInStock: -el.qnt } })
-    //   );
-    // });
+    await reqInfo.order.forEach((el) => {
+      promises.push(
+        db
+          .collection("items")
+          .updateOne({ _id: el._id }, { $inc: { numInStock: -el.qnt } })
+      );
+    });
 
-    // await Promise.all(promises).then((results) => {
+    await Promise.all(promises).then((results) => {
       res.status(200).json({
         status: 200,
-        // data: results,
+        data: newValues,
         // itemList,
         message: "Request successful",
       });
-    // });
+    });
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }

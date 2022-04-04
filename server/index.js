@@ -12,7 +12,7 @@ const {
   getItemsByBodyLocation,
   placeOrder,
   getCompanyById,
-} = require("./handlersLocal");
+} = require("./handlers");
 
 express()
   .use(function (req, res, next) {
