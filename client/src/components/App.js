@@ -6,7 +6,8 @@ import Products from "./Products";
 import SingleProduct from "./SingleProduct/SingleProduct";
 import Cart from "./Cart/Cart";
 import Checkout from "./Checkout/Checkout";
-
+import ErrorPage from "./ErrorPage";
+//comment
 const App = () => {
   return (
     <>
@@ -28,6 +29,9 @@ const App = () => {
           </Route>
           <Route path="/checkout">
             <Checkout />
+          </Route>
+          <Route path="*">
+            <ErrorPage />
           </Route>
         </Switch>
       </BrowserRouter>
