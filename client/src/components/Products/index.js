@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import SingleProduct from "../SingleProduct/SingleProduct";
 
 // import ent from "../../assets/SidebarCats/Entertainment.png";
 import { TiThMenuOutline } from "react-icons/ti";
@@ -13,6 +14,7 @@ const Products = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [products, setProducts] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [modal, setModal] = useState(null)
 
   const catParam = useParams().category;
   useEffect(() => {
@@ -47,6 +49,7 @@ const Products = () => {
   if (!products) return <div>Loading...</div>;
 
   return (
+    <>
     <Wrapper>
       {sidebarToggle ? (
         <Sidebar
@@ -67,7 +70,7 @@ const Products = () => {
         </TitleDiv>
         <ProductsGrid>
           {products.map((product) => {
-            return <ProductPreview productInfo={product} key={product._id} />;
+            return <ProductPreview productInfo={product} setModal={setModal} key={product._id} />;
           })}
         </ProductsGrid>
         <PageDiv>
@@ -79,6 +82,8 @@ const Products = () => {
         </PageDiv>
       </MainDiv>
     </Wrapper>
+    <SingleProduct modal={modal} setModal={setModal} />
+    </>
   );
 };
 

@@ -13,7 +13,7 @@ const PageSelect = ({ currentPage, setCurrentPage, numProducts }) => {
         setCurrentPage(currentPage + Number(ev.target.value))
       }
     >
-      <ButtonBack value={-1} currentPage={currentPage} disabled={backDisable}>
+      <ButtonBack value={-1} disabled={backDisable}>
         BACK
       </ButtonBack>
       <CurrentPageDiv>{currentPage}</CurrentPageDiv>
