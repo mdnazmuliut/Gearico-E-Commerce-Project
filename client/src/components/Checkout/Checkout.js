@@ -1,113 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Shipping from "./Shipping";
 import Billing from "./Billing";
 import Review from "./Review";
 import CartInfo from "./CartInfo";
-import { NavLink } from "react-router-dom";
+import { DataContext } from "../Hooks/useContext";
+import Confirmation from "./Confirmation";
 
 const Checkout = () => {
   const [inputDisplay, setInputDisplay] = useState(1);
+  const { cart, total } = useContext(DataContext);
 
   const initialState = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    province: "",
-    postcode: "",
-    country: "",
-    fullName: "",
-    cardNo: "",
-    expMonth: "",
-    expYear: "",
-    cvv: "",
-  };
-
-  const initialShippingState = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    province: "",
-    postcode: "",
-    country: "",
-  };
-
-  const initialBillingState = {
-    fullName: "",
-    cardNo: "",
-    expMonth: "",
-    expYear: "",
-    cvv: "",
-  };
+    shipping: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      address: "",
+      province: "",
+      postcode: "",
+      country: "",
+    },
+    billing: {
+      fullName: "",
+      cardNo: "",
+      expMonth: "",
+      expYear: "",
+      cvv: "",
+    }
+  }
 
   const [formData, setFormData] = useState(initialState);
-  const [disabled, setDisabled] = useState(true);
   const [subStatus, setSubStatus] = useState("idle");
 
-  const [shippingData, setShippingData] = useState(initialShippingState);
-  const [billingData, setBillingData] = useState(initialBillingState);
+  // updating the formData any time an input is changed
+  const handleChange = (value, name, section) => {
+    let newFormData = {...formData}
+    newFormData[section][name] = value;
+    setFormData(newFormData);
+  };
 
-  const handleClickNext = () => {
-    // ev.preventDefault();
+  // NEXT BUTTON - verifying all fields have data, then incrementing the inputDisplay
+  const handleClickNext = (ev, section) => {
     let goNextPage = true;
-
-    Object.values(shippingData).forEach((value) => {
+    console.log("TEST SECTION?", section);
+    Object.values(formData[section]).forEach((value) => {
       value === "" && (goNextPage = false);
     });
 
     if (goNextPage === true) {
       inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
     }
-    // console.log(
-    //   "Object Value Shipping in checkout:",
-    //   Object.values(shippingData)
-    // );
   };
+
+  // BACK BUTTON - decrementing the inputDisplay
   const handleClickBack = () => {
     inputDisplay > 1 && setInputDisplay(inputDisplay - 1);
   };
-
-  const handleChange = (value, name) => {
-    setFormData({ ...formData, [name]: value });
-
-    setShippingData({
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      address: formData.address,
-      province: formData.province,
-      postcode: formData.postcode,
-      country: formData.country,
-    });
-
-    setBillingData({
-      fullName: formData.fullName,
-      cardNo: formData.cardNo,
-      expMonth: formData.expMonth,
-      expYear: formData.expYear,
-      cvv: formData.cvv,
-    });
-    console.log(
-      "Shipping Object Value HandleChange:",
-      Object.values(shippingData)
-    );
-    console.log(
-      "Billing Object Value HandleChange:",
-      Object.values(billingData)
-    );
-  };
-
-  console.log("formadata:", formData);
-
+  
+  // PLACE ORDER BUTTON - appending the order info to the customer info, then sending it to the server
   const handleClick = (ev) => {
     ev.preventDefault();
     setSubStatus("pending");
 
+    let newFormData = {...formData}
+    newFormData["order"] = cart
+
     fetch("/api/place-order", {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify(newFormData),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -128,6 +89,7 @@ const Checkout = () => {
   return (
     <>
       <CheckoutContents>
+        <Confirmation subStatus={subStatus} setSubStatus={setSubStatus} />
         <StepsHead>
           <StepCircle>
             <Circle>1</Circle>
@@ -148,32 +110,22 @@ const Checkout = () => {
               <Shipping
                 formData={formData}
                 handleChange={handleChange}
-                handleClick={handleClick}
                 handleClickNext={handleClickNext}
-                subStatus={subStatus}
               />
             )}
             {inputDisplay === 2 && (
               <Billing
                 formData={formData}
                 handleChange={handleChange}
-                handleClick={handleClick}
                 handleClickBack={handleClickBack}
-                subStatus={subStatus}
-                billingData={billingData}
-                inputDisplay={inputDisplay}
-                setInputDisplay={setInputDisplay}
+                handleClickNext={handleClickNext}
               />
             )}
             {inputDisplay === 3 && (
               <Review formData={formData} handleClickBack={handleClickBack} />
             )}
-            {/* <ButtonWrapper>
-              <ButtonBack onClick={handleClickBack}>Back</ButtonBack>
-              <ButtonNext onClick={handleClickNext}>Next</ButtonNext>
-            </ButtonWrapper> */}
           </InputSection>
-          <CartInfo />
+          <CartInfo cart={cart} total={total} />
         </Main>
         <PlaceOrderBtn onClick={handleClick}>Place Order</PlaceOrderBtn>
       </CheckoutContents>

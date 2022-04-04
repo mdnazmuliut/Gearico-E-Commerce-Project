@@ -97,7 +97,12 @@ const getItemsByBodyLocation = async (req, res) => {
 
 const placeOrder = async (req, res) => {
   try {
-    res.status(400).json({ status: 400, message: "Endpoint unavailable" });
+    const reqInfo = req.body;
+
+    console.log("BODY-----------------------", reqInfo);
+    console.log("JUST ORDER INFO", req.body.order);
+
+    res.status(200).json({ status: 200, message: "Endpoint unavailable - please change from handlersLocal to handlers" });
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }

@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { DataContext } from "../Hooks/useContext";
 
-const CartInfo = () => {
-  const { cart, total } = useContext(DataContext);
-  console.log("Cart info Cart:", cart);
+const CartInfo = ({ cart, total }) => {
 
   return (
     <>
@@ -29,7 +26,7 @@ const CartInfo = () => {
                     <SmallTxt>{item.productInfo.category}</SmallTxt>
                   </CaptionWrap>
                 </PicnCap>
-                <SmallTxt>Qty #{item.qnt}</SmallTxt>
+                <SmallTxt>Qty: {item.qnt}</SmallTxt>
               </Wrapper>
             );
           })}

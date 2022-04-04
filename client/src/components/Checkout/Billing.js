@@ -5,28 +5,11 @@ import Input from "./Input";
 const Billing = ({
   formData,
   handleChange,
-  handleClick,
-  //   handleClickNext,
+  handleClickNext,
   handleClickBack,
-  disabled,
-  subStatus,
-  billingData,
-  inputDisplay,
-  setInputDisplay,
 }) => {
-  const handleClickNext = () => {
-    // ev.preventDefault();
-    let goNextPage = true;
 
-    Object.values(billingData).forEach((value) => {
-      value === "" && (goNextPage = false);
-    });
-
-    if (goNextPage === true) {
-      inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
-    }
-    console.log("Object Value in billing:", Object.values(billingData));
-  };
+  const section="billing";
 
   return (
     <>
@@ -34,56 +17,54 @@ const Billing = ({
         <Header>Payment Details</Header>
         <Wrapper>
           <FormContent>
-            {/* <h1>Order Form</h1>
-            <h2>Provide your information</h2> */}
             <Input
               name="fullName"
               type="text"
               placeholder="Full name"
-              defaultValue={formData.fullName}
+              section={section}
+              defaultValue={formData.billing.fullName}
               handleChange={handleChange}
-              required
             />
             <Input
               name="cardNo"
               type="text"
               placeholder="Card no"
-              defaultValue={formData.cardNo}
+              section={section}
+              defaultValue={formData.billing.cardNo}
               handleChange={handleChange}
-              required
             />
             <FormGroup>
               <Input
                 name="expMonth"
                 type="text"
                 placeholder="mm"
-                defaultValue={formData.expMonth}
+                section={section}
+                defaultValue={formData.billing.expMonth}
                 handleChange={handleChange}
-                required
               />
               <Input
                 name="expYear"
                 type="text"
                 placeholder="yy"
-                defaultValue={formData.expYear}
+                section={section}
+                defaultValue={formData.billing.expYear}
                 handleChange={handleChange}
-                required
               />
             </FormGroup>
             <Input
               name="cvv"
               type="text"
               placeholder="cvv"
-              defaultValue={formData.cvv}
+              section={section}
+              defaultValue={formData.billing.cvv}
               handleChange={handleChange}
-              required
             />
           </FormContent>
         </Wrapper>
       </Main>
       <ButtonWrapper>
         <ButtonBack onClick={handleClickBack}>Back</ButtonBack>
-        <ButtonNext onClick={handleClickNext}>Next</ButtonNext>
+        <ButtonNext onClick={(ev) => handleClickNext(ev, section)}>Next</ButtonNext>
       </ButtonWrapper>
     </>
   );
@@ -91,7 +72,6 @@ const Billing = ({
 
 const Main = styled.div`
   margin: 20px;
-  /* padding: 10px; */
   width: 500px;
   background-color: beige;
   border-radius: 10px;
@@ -109,9 +89,8 @@ const Wrapper = styled.form`
   margin: 20px;
   padding: 0 20px;
 `;
-const FormContent = styled.div`
-  /* margin: 0 16px 0; */
-`;
+const FormContent = styled.div``;
+
 const FormGroup = styled.div`
   display: flex;
   justify-content: space-between;
