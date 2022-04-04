@@ -7,7 +7,7 @@ import SingleProduct from "./SingleProduct/SingleProduct";
 import Cart from "./Cart/Cart";
 import Checkout from "./Checkout/Checkout";
 import ErrorPage from "./ErrorPage";
-
+//comment
 const App = () => {
   return (
     <>

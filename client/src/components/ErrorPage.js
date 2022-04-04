@@ -11,7 +11,7 @@ const ErrorPage = () => {
           <Bomb />
         </h1>
       </div>
-      <h2>An unknown error has occurred</h2>
+      <h2>An unknown error has occurred.</h2>
       <p>
         Please go to <LinkHome to="/"> Home</LinkHome> page
       </p>
