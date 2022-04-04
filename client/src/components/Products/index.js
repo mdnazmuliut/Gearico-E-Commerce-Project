@@ -99,7 +99,7 @@ const MainDiv = styled.div`
 const TitleDiv = styled.div`
   padding: 100px 0;
   width: 100%;
-  background-color: ${({ cat }) => (cat ? "#ccc" : "#000")};
+  background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
 `;
 
 const SidebarButton = styled.button`
