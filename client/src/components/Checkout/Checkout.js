@@ -64,7 +64,14 @@ const Checkout = () => {
     setSubStatus("pending");
 
     let newFormData = { ...formData };
-    newFormData["order"] = cart;
+    // newFormData["order"] = cart;
+    newFormData["order"] = cart.map((order) => {
+      return {
+        _id: order.productInfo._id,
+        qnt: order.qnt,
+        itemTotal: order.itemTotal,
+      };
+    });
 
     fetch("/api/place-order", {
       method: "POST",
