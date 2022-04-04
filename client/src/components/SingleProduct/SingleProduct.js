@@ -3,36 +3,39 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { DataContext } from "../Hooks/useContext";
 
-const SingleProduct = () => {
+const SingleProduct = ({modal, setModal}) => {
   const [productInfo, setProductInfo] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { setCart, cart, calcItemTotal } = useContext(DataContext);
   const history = useHistory();
 
   // getting product id from params
-  const productId = useParams().productId;
+  const params = useParams().productId
+  const productId = params || modal;
 
   // fetching the product info
   useEffect(() => {
     fetch(`/api/get-item/${productId}`)
-      .then((res) => res.json())
-      .then((data) => setProductInfo(data.data))
-      .catch((err) => console.log("error:", err));
-  }, []);
-
+    .then((res) => res.json())
+    .then((data) => setProductInfo(data.data))
+    .catch((err) => console.log("error:", err));
+  }, [productId]);
+  
   // updating the cart with product info, quanity and total price
   const handleClick = () => {
     setCart([
       ...cart,
       {
         productInfo,
-        qnt: quantity,
+        qnt: Number(quantity),
         itemTotal: calcItemTotal(productInfo.price, quantity),
       },
     ]);
     history.push("/cart");
   };
-
+  
+  if (!modal && !params) return null;
+  
   // returning a loading message until server has responded with product data
   if (!productInfo) return <div>Loading...</div>;
 
@@ -42,8 +45,16 @@ const SingleProduct = () => {
     numArray.push(i);
   }
 
+  // closing the modal if user clicks outside the main Wrapper
+  // if params were used to navigate here, returning to the Products page
+  const handleModalClose = () => {
+    if (params) history.push("/products")
+    if (modal) setModal(null);
+  }
+  
   return (
-    <Wrapper>
+    <Modal onClick={handleModalClose}>
+    <Wrapper onClick={(ev) => ev.stopPropagation()}>
       <ItemContainer>
         <LeftDiv>
           <img src={productInfo.imageSrc} />
@@ -79,15 +90,31 @@ const SingleProduct = () => {
         </RightDiv>
       </ItemContainer>
     </Wrapper>
+    </Modal>
   );
 };
+
+const Modal = styled.div`
+ position: fixed;
+ top: 0;
+ right: 0;
+ left: 0;
+ bottom: 0;
+ display: flex;
+  align-items: center;
+  justify-content: center;
+ background-color: rgba(55, 55, 55, 0.8);
+ z-index: 200;
+`
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 200px;
   font-family: "Open Sans", sans-serif;
+  background-color: black;
+  padding: 200px;
+  /* box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75); */
 `;
 
 const ItemContainer = styled.div`
@@ -97,6 +124,7 @@ const ItemContainer = styled.div`
 const LeftDiv = styled.div`
   margin: 0 20px;
 `;
+
 const RightDiv = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,20 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { DataContext } from "../Hooks/useContext";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import CartItem from "./CartItem";
 
 const Cart = () => {
   const { cart, setCart, calcItemTotal, total } = useContext(DataContext);
   const history = useHistory();
-
-  // creating an array out of a number (for the Quantity dropdowns)
-  const numArray = (number) => {
-    let numArray = [];
-    for (let i = 1; i <= number; i++) {
-      numArray.push(i);
-    }
-    return numArray;
-  };
 
   // updating the quantity of a product
   const updateQuantity = (ev, price, index) => {
@@ -33,37 +25,18 @@ const Cart = () => {
   return (
     <Wrapper>
       <MainContainer>
-        
         {cart.length > 0 &&
           cart.map((item, index) => {
             return (
-              <ItemDiv>
-                <Image src={item.productInfo.imageSrc} />
-                <ProdName>{item.productInfo.name}</ProdName>
-                <Line />
-                <QuantityBox>
-                  Quantity:
-                  <select
-                    defaultValue={item.qnt}
-                    onChange={(ev) => updateQuantity(ev, item.productInfo.price, index)}
-                  >
-                    {numArray(item.productInfo.numInStock).map((number) => (
-                      <option key={number} value={number}>
-                        {number}
-                      </option>
-                    ))}
-                  </select>
-                </QuantityBox>
-                <ItemTotal>
-                  ${calcItemTotal(item.productInfo.price, cart[index].qnt).toFixed(2)}
-                </ItemTotal>
-                <RemoveButton onClick={(ev) => removeItem(ev, index)}>
-                  x
-                </RemoveButton>
-              </ItemDiv>
+              <CartItem 
+                item={item} 
+                index={index} 
+                removeItem={removeItem}
+                updateQuantity={updateQuantity}
+                key={item.productInfo._id} />
             );
           })}
-       
+
         <CartTotalDiv>
           <SpacerDivLeft />
           <CartTotal>${total.toFixed(2)}</CartTotal>
@@ -71,9 +44,10 @@ const Cart = () => {
 
         <CheckoutButtonDiv>
           <SpacerDivLeft />
-          <CheckoutButton onClick={() => history.push("/checkout")}>Checkout</CheckoutButton>
+          <CheckoutButton onClick={() => history.push("/checkout")}>
+            Checkout
+          </CheckoutButton>
         </CheckoutButtonDiv>
-
       </MainContainer>
     </Wrapper>
   );
@@ -91,53 +65,6 @@ const MainContainer = styled.div`
   flex-direction: column;
 `;
 
-const ItemDiv = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 20px;
-  > * {
-    margin: 0 10px;
-  }
-`;
-
-const Image = styled.img`
-  width: 100px;
-  border-radius: 5px;
-`;
-
-const ProdName = styled.p`
-  font-size: 20px;
-  font-weight: 700;
-  width: 400px;
-`;
-
-const Line = styled.div`
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  width: 200px;
-  height: 0;
-`;
-
-const QuantityBox = styled.div`
-  width: 150px;
-  > select {
-    width: 40px;
-    margin: 0 5px;
-  }
-`;
-
-const ItemTotal = styled.p`
-  width: 50px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const RemoveButton = styled.button`
-  font-size: 18px;
-  border: none;
-  background-color: red;
-  cursor: pointer;
-`;
-
 const SpacerDivLeft = styled.div`
   width: 960px;
 `;
@@ -146,7 +73,7 @@ const CartTotalDiv = styled.div`
   display: flex;
 `;
 const CartTotal = styled.div`
-width: 50px;
+  width: 50px;
   display: flex;
   justify-content: flex-end;
 `;

@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 import bg from "../../assets/ProductBg.png";
 
-const ProductPreview = ({ productInfo }) => {
+const ProductPreview = ({ productInfo, setModal }) => {
   return (
     <Body>
-      <Container to={`/products/id/${productInfo._id}`}>
+      <Container onClick={()=> setModal(productInfo._id)}>
         <Wrapper>
           <ImgWrap>
             <ProductImg src={productInfo.imageSrc} />
@@ -33,7 +32,8 @@ const Body = styled.body`
   margin-top: 60px;
 `;
 
-const Container = styled(Link)`
+const Container = styled.button`
+  border: none;
   margin: 0 50px;
   position: relative;
   min-width: 320px;
@@ -42,6 +42,8 @@ const Container = styled(Link)`
   border-radius: 20px;
   overflow: hidden;
   text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
 `;
 
 const Wrapper = styled.div`
