@@ -93,6 +93,8 @@ const ImgWrap = styled.div`
 
 const ProductImg = styled.img`
   position: absolute;
+  width: 180px;
+  height: 180px;
   top: 20%;
   left: 20%;
   border-radius: 10px;

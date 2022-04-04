@@ -209,8 +209,12 @@ const getCompanyById = async (req, res) => {
     const company = await db.collection("companies").findOne({ _id: id });
 
     company
-      ? res.status(200).json({ status: 200, data: company, message: "Request successful" })
-      : res.status(404).json({ status: 404, data: id, message: "Company not found" });
+      ? res
+          .status(200)
+          .json({ status: 200, data: company, message: "Request successful" })
+      : res
+          .status(404)
+          .json({ status: 404, data: id, message: "Company not found" });
   } catch (err) {
     res.status(500).json({ status: 500, data: id, message: "Server error" });
   }

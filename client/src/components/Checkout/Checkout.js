@@ -27,15 +27,15 @@ const Checkout = () => {
       expMonth: "",
       expYear: "",
       cvv: "",
-    }
-  }
+    },
+  };
 
   const [formData, setFormData] = useState(initialState);
   const [subStatus, setSubStatus] = useState("idle");
 
   // updating the formData any time an input is changed
   const handleChange = (value, name, section) => {
-    let newFormData = {...formData}
+    let newFormData = { ...formData };
     newFormData[section][name] = value;
     setFormData(newFormData);
   };
@@ -57,14 +57,14 @@ const Checkout = () => {
   const handleClickBack = () => {
     inputDisplay > 1 && setInputDisplay(inputDisplay - 1);
   };
-  
+
   // PLACE ORDER BUTTON - appending the order info to the customer info, then sending it to the server
   const handleClick = (ev) => {
     ev.preventDefault();
     setSubStatus("pending");
 
-    let newFormData = {...formData}
-    newFormData["order"] = cart
+    let newFormData = { ...formData };
+    newFormData["order"] = cart;
 
     fetch("/api/place-order", {
       method: "POST",
@@ -127,7 +127,13 @@ const Checkout = () => {
           </InputSection>
           <CartInfo cart={cart} total={total} />
         </Main>
-        <PlaceOrderBtn onClick={handleClick}>Place Order</PlaceOrderBtn>
+        <PlaceOrderBtn
+          onClick={handleClick}
+          disabled={inputDisplay === 3 ? false : true}
+        >
+          Place Order
+        </PlaceOrderBtn>
+        {/* <PlaceOrderBtn onClick={handleClick}>Place Order</PlaceOrderBtn> */}
       </CheckoutContents>
     </>
   );
