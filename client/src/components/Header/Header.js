@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect } from "react";
+import { BiShoppingBag } from "react-icons/bi";
 
 const Header = () => {
   return (
@@ -19,7 +19,10 @@ const Header = () => {
                 <LinkNav href="/">Contact</LinkNav>
               </NavItem>
               <NavItem>
-                <LinkNav href="/cart">Cart</LinkNav>
+                <LinkNav href="/cart">
+                  {/* <BiShoppingBag className="cart" /> Cart */}
+                  Cart
+                </LinkNav>
               </NavItem>
             </NavList>
           </NavMenu>
@@ -85,6 +88,13 @@ const LinkNav = styled.a`
   text-transform: initial;
   position: relative;
   text-decoration: none;
+
+  .cart {
+    font-size: 20px;
+  }
 `;
+
+// For Media Queries,
+// instead of text, replace by ICONS
 
 export default Header;

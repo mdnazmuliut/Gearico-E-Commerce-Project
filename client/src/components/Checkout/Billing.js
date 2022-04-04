@@ -7,9 +7,9 @@ const Billing = ({
   handleChange,
   handleClickNext,
   handleClickBack,
+  setStepColor,
 }) => {
-
-  const section="billing";
+  const section = "billing";
 
   return (
     <>
@@ -20,7 +20,7 @@ const Billing = ({
             <Input
               name="fullName"
               type="text"
-              placeholder="Full name"
+              placeholder="Cardholder Name"
               section={section}
               defaultValue={formData.billing.fullName}
               handleChange={handleChange}
@@ -28,7 +28,7 @@ const Billing = ({
             <Input
               name="cardNo"
               type="text"
-              placeholder="Card no"
+              placeholder="Card Number"
               section={section}
               defaultValue={formData.billing.cardNo}
               handleChange={handleChange}
@@ -37,7 +37,7 @@ const Billing = ({
               <Input
                 name="expMonth"
                 type="text"
-                placeholder="mm"
+                placeholder="MM"
                 section={section}
                 defaultValue={formData.billing.expMonth}
                 handleChange={handleChange}
@@ -45,7 +45,7 @@ const Billing = ({
               <Input
                 name="expYear"
                 type="text"
-                placeholder="yy"
+                placeholder="YY"
                 section={section}
                 defaultValue={formData.billing.expYear}
                 handleChange={handleChange}
@@ -54,17 +54,31 @@ const Billing = ({
             <Input
               name="cvv"
               type="text"
-              placeholder="cvv"
+              placeholder="CVC / CVV"
               section={section}
               defaultValue={formData.billing.cvv}
               handleChange={handleChange}
             />
           </FormContent>
+          <Logo>Gearico</Logo>
         </Wrapper>
       </Main>
       <ButtonWrapper>
-        <ButtonBack onClick={handleClickBack}>Back</ButtonBack>
-        <ButtonNext onClick={(ev) => handleClickNext(ev, section)}>Next</ButtonNext>
+        <ButtonBack
+          onClick={() => {
+            handleClickBack();
+          }}
+        >
+          Back
+        </ButtonBack>
+        <ButtonNext
+          onClick={(ev) => {
+            handleClickNext(ev, section);
+            setStepColor("green");
+          }}
+        >
+          Next
+        </ButtonNext>
       </ButtonWrapper>
     </>
   );
@@ -73,9 +87,11 @@ const Billing = ({
 const Main = styled.div`
   margin: 20px;
   width: 500px;
-  background-color: beige;
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 400px;
 `;
 
 const Header = styled.div`
@@ -86,10 +102,19 @@ const Header = styled.div`
 `;
 
 const Wrapper = styled.form`
-  margin: 20px;
+  margin: 40px 20px;
   padding: 0 20px;
 `;
 const FormContent = styled.div``;
+
+const Logo = styled.h2`
+  margin-top: 58px;
+  font-size: 5em;
+  font-weight: 800;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.1);
+  cursor: default;
+`;
 
 const FormGroup = styled.div`
   display: flex;
@@ -118,6 +143,14 @@ const ButtonBack = styled.button`
   width: 100px;
   font-size: 18px;
   cursor: pointer;
+  padding: 8px;
+  transition: 0.2s;
+
+  &:active {
+    background-color: rgba(169, 169, 169);
+    color: white;
+    font-weight: bold;
+  }
 `;
 const ButtonNext = styled.button`
   border: none;
@@ -127,6 +160,14 @@ const ButtonNext = styled.button`
   width: 100px;
   font-size: 18px;
   cursor: pointer;
+  padding: 8px;
+  transition: 0.2s;
+
+  &:active {
+    background-color: rgba(169, 169, 169);
+    color: white;
+    font-weight: bold;
+  }
 `;
 
 export default Billing;

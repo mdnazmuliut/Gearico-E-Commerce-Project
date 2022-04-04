@@ -2,16 +2,22 @@ import React from "react";
 import styled from "styled-components";
 
 const CartInfo = ({ cart, total }) => {
-
   return (
     <>
       <Content>
         <OrderSummary>
           <Header>Order Summary</Header>
 
-          <SmallTxt>Subtotal: ${total.toFixed(2)}</SmallTxt>
-          <SmallTxt>Taxes: ${(total * 0.15).toFixed(2)}</SmallTxt>
-          <SmallTxt>Total: ${(total * 1.15).toFixed(2)}</SmallTxt>
+          <SmallTxt>
+            <strong> Subtotal:</strong> ${total.toFixed(2)}
+          </SmallTxt>
+          <SmallTxt>
+            <strong> Taxes:</strong> ${(total * 0.15).toFixed(2)}
+          </SmallTxt>
+          <Divider />
+          <SmallTxt>
+            <strong> Total:</strong> ${(total * 1.15).toFixed(2)}
+          </SmallTxt>
         </OrderSummary>
 
         <OrderDetails>
@@ -45,7 +51,8 @@ const Content = styled.div`
 const OrderSummary = styled.div`
   padding: 10px;
   width: 250px;
-  background-color: beige;
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
   border-radius: 10px;
   box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
 `;
@@ -62,9 +69,12 @@ const OrderDetails = styled.div`
   margin-top: 20px;
 
   width: 250px;
-  background-color: beige;
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
   border-radius: 10px;
   box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+  height: 220px;
+  overflow: scroll;
 `;
 
 const Wrapper = styled.div`
@@ -85,8 +95,18 @@ const Img = styled.img`
 `;
 
 const SmallTxt = styled.div`
-  font-size: 14px;
+  font-size: 15px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
   color: black;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  margin: 15px 0;
+  background-color: rgba(0, 0, 0, 0.7);
 `;
 
 const BoldTxt = styled.div`
