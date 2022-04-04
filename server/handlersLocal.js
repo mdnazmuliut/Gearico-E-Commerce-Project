@@ -1,5 +1,5 @@
 const items = require("./data/items.json");
-const companies = require("./data/companies.json")
+const companies = require("./data/companies.json");
 
 const getItems = async (req, res) => {
   let start = req.query.start ? Number(req.query.start) : 0;
@@ -44,7 +44,7 @@ const getItemById = async (req, res) => {
 
 const getItemsByCategory = async (req, res) => {
   const cat = req.params.cat.toLowerCase();
-  
+
   let start = req.query.start ? Number(req.query.start) : 0;
   let limit = req.query.limit ? Number(req.query.limit) : 10;
 
@@ -97,7 +97,12 @@ const getItemsByBodyLocation = async (req, res) => {
 
 const placeOrder = async (req, res) => {
   try {
-    res.status(400).json({ status: 400, message: "Endpoint unavailable" });
+    const reqInfo = req.body;
+
+    console.log("BODY-----------------------", reqInfo);
+    console.log("JUST ORDER INFO", req.body.order);
+
+    res.status(200).json({ status: 200, message: "Endpoint unavailable - please change from handlersLocal to handlers" });
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }
@@ -108,9 +113,13 @@ const getCompanyById = async (req, res) => {
   try {
     const company = companies.find(({ _id }) => _id === id);
 
-    (company)
-    ? res.status(200).json({ status: 200, data: company, message: "Request successful" })
-    : res.status(404).json({ status: 404, data: id, message: "Company not found"})
+    company
+      ? res
+          .status(200)
+          .json({ status: 200, data: company, message: "Request successful" })
+      : res
+          .status(404)
+          .json({ status: 404, data: id, message: "Company not found" });
   } catch (err) {
     res.status(500).json({ status: 500, data: id, message: "Server error" });
   }

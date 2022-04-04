@@ -3,13 +3,8 @@ import styled from "styled-components";
 
 const Review = ({
   formData,
-  handleChange,
-  handleClick,
   handleClickBack,
-  disabled,
-  subStatus,
 }) => {
-  console.log("Review Form Data:", formData);
 
   let cardNumHide = [];
   let cvvNumHide = [];
@@ -40,8 +35,8 @@ const Review = ({
     return cvvNumHide.join("");
   };
 
-  cardNoDisp(formData.cardNo);
-  cvvNoDisp(formData.cvv);
+  cardNoDisp(formData.billing.cardNo);
+  cvvNoDisp(formData.billing.cvv);
 
   return (
     <>
@@ -50,26 +45,26 @@ const Review = ({
 
         <CustomerInfo>
           <TextHeader>Customer Information:</TextHeader>
-          <Text>{formData.firstName}</Text>
-          <Text>{formData.lastName}</Text>
-          <Text>{formData.email}</Text>
+          <Text>{formData.shipping.firstName}</Text>
+          <Text>{formData.shipping.lastName}</Text>
+          <Text>{formData.shipping.email}</Text>
         </CustomerInfo>
 
         <ShippingInfo>
           <TextHeader>Shipping Information</TextHeader>
-          <Text>{formData.address}</Text>
-          <Text>{formData.city}</Text>
-          <Text>{formData.province}</Text>
-          <Text>{formData.postcode}</Text>
-          <Text>{formData.country}</Text>
+          <Text>{formData.shipping.address}</Text>
+          <Text>{formData.shipping.city}</Text>
+          <Text>{formData.shipping.province}</Text>
+          <Text>{formData.shipping.postcode}</Text>
+          <Text>{formData.shipping.country}</Text>
         </ShippingInfo>
 
         <PaymentDetails>
           <TextHeader>Billing Information:</TextHeader>
-          <Text>{formData.fullName}</Text>
+          <Text>{formData.billing.fullName}</Text>
           <Text>{cardNumHide}</Text>
           <Text>
-            {formData.expMonth} / {formData.expYear}
+            {formData.billing.expMonth} / {formData.billing.expYear}
           </Text>
 
           <Text>{cvvNumHide}</Text>
@@ -84,7 +79,6 @@ const Review = ({
 
 const Main = styled.div`
   margin: 20px;
-  /* padding: 10px; */
   width: 500px;
   background-color: beige;
   border-radius: 10px;

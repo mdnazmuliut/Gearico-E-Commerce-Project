@@ -51,7 +51,7 @@ const SingleProduct = () => {
         <RightDiv>
           <Title>{productInfo.name}</Title>
           <InfoBox>
-            <h4>From: {productInfo.companyId}</h4>
+            <h4>From: {productInfo.companyName}</h4>
             <h4>Category: {productInfo.category}</h4>
             <Price>
               ${calcItemTotal(productInfo.price, quantity).toFixed(2)}

@@ -1,4 +1,3 @@
-import Demo from "./Sections/Demo";
 import SectionOne from "./Sections/Sec-1";
 import Categories from "./Sections/Sec-2";
 import FeaturedProducts from "./Sections/Sec-3";
@@ -13,7 +12,6 @@ const Home = () => {
       <FeaturedProducts />
       <Sponsors />
       <Footer />
-      {/* <Demo /> */}
     </>
   );
 };

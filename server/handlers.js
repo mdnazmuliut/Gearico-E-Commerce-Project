@@ -145,53 +145,56 @@ const placeOrder = async (req, res) => {
     await client.connect();
     const reqInfo = req.body;
 
-    const { firstName, lastName, email, address } = reqInfo;
+    console.log("BODY-----------------------", reqInfo);
+    console.log("JUST ORDER INFO", req.body.order);
 
-    const newValues = {
-      _id: uuidv4(),
-      customerInfo: {
-        firstName: reqInfo.customerInfo.firstName,
-        lastName: reqInfo.customerInfo.lastName,
-        email: reqInfo.customerInfo.email,
-        address: reqInfo.customerInfo.address,
-      },
-      orderInfo: reqInfo.orderInfo,
-      creditInfo: reqInfo.creditInfo,
-    };
+    // const { firstName, lastName, email, address } = reqInfo;
+
+    // const newValues = {
+    //   _id: uuidv4(),
+    //   customerInfo: {
+    //     firstName: reqInfo.customerInfo.firstName,
+    //     lastName: reqInfo.customerInfo.lastName,
+    //     email: reqInfo.customerInfo.email,
+    //     address: reqInfo.customerInfo.address,
+    //   },
+    //   orderInfo: reqInfo.orderInfo,
+    //   creditInfo: reqInfo.creditInfo,
+    // };
 
     //=====Post order inside "orders" collection=====
-    const data = await db.collection("orders").insertOne(newValues);
+    // const data = await db.collection("orders").insertOne(newValues);
 
-    const items = await db.collection("items").find().toArray();
-    const orders = await db.collection("orders").find().toArray();
+    // const items = await db.collection("items").find().toArray();
+    // const orders = await db.collection("orders").find().toArray();
 
-    let orderInfoList = reqInfo.orderInfo.map((el) => el);
+    // let orderInfoList = reqInfo.orderInfo.map((el) => el);
 
-    let orderId = reqInfo.orderInfo.map((el) => el._id);
+    // let orderId = reqInfo.orderInfo.map((el) => el._id);
 
-    let itemList = [];
-    items.forEach((item) => {
-      if (orderId.includes(item._id)) itemList.push(item);
-    });
+    // let itemList = [];
+    // items.forEach((item) => {
+    //   if (orderId.includes(item._id)) itemList.push(item);
+    // });
 
-    const promises = [];
+    // const promises = [];
 
-    await reqInfo.orderInfo.forEach((el) => {
-      promises.push(
-        db
-          .collection("items")
-          .updateOne({ _id: el._id }, { $inc: { numInStock: -el.qnt } })
-      );
-    });
+    // await reqInfo.orderInfo.forEach((el) => {
+    //   promises.push(
+    //     db
+    //       .collection("items")
+    //       .updateOne({ _id: el._id }, { $inc: { numInStock: -el.qnt } })
+    //   );
+    // });
 
-    await Promise.all(promises).then((results) => {
+    // await Promise.all(promises).then((results) => {
       res.status(200).json({
         status: 200,
-        data: results,
-        itemList,
+        // data: results,
+        // itemList,
         message: "Request successful",
       });
-    });
+    // });
   } catch (err) {
     res.status(500).json({ status: 500, message: "Server error" });
   }
@@ -206,8 +209,12 @@ const getCompanyById = async (req, res) => {
     const company = await db.collection("companies").findOne({ _id: id });
 
     company
-      ? res.status(200).json({ status: 200, data: company, message: "Request successful" })
-      : res.status(404).json({ status: 404, data: id, message: "Company not found" });
+      ? res
+          .status(200)
+          .json({ status: 200, data: company, message: "Request successful" })
+      : res
+          .status(404)
+          .json({ status: 404, data: id, message: "Company not found" });
   } catch (err) {
     res.status(500).json({ status: 500, data: id, message: "Server error" });
   }
