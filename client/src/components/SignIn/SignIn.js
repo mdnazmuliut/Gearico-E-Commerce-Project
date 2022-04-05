@@ -11,12 +11,24 @@ const SignIn = () => {
 
   return (
     <PageWrapper>
+      <Background>
+        <ShapeOne />
+        <ShapeTwo />
+      </Background>
       <ContentWrapper>
-        <BgImage src={phone} />
-        {(pageDisplay === "signin") && <SignInBox setPageDisplay={setPageDisplay} />}
-        {(pageDisplay === "signup") && <SignUpBox setPageDisplay={setPageDisplay} />}
-        {(pageDisplay === "password") && <ForgotPasswordBox setPageDisplay={setPageDisplay} />}
-        {(pageDisplay.message) && <Message setPageDisplay={setPageDisplay} pageDisplay={pageDisplay} />}
+        {/* <BgImage src={phone} /> */}
+        {pageDisplay === "signin" && (
+          <SignInBox setPageDisplay={setPageDisplay} />
+        )}
+        {pageDisplay === "signup" && (
+          <SignUpBox setPageDisplay={setPageDisplay} />
+        )}
+        {pageDisplay === "password" && (
+          <ForgotPasswordBox setPageDisplay={setPageDisplay} />
+        )}
+        {pageDisplay.message && (
+          <Message setPageDisplay={setPageDisplay} pageDisplay={pageDisplay} />
+        )}
       </ContentWrapper>
     </PageWrapper>
   );
@@ -24,33 +36,54 @@ const SignIn = () => {
 
 const PageWrapper = styled.div`
   width: 100vw;
+  height: 100vh;
+  background-color: #080710;
   display: flex;
   justify-content: center;
+`;
+
+const Background = styled.div`
+  width: 430px;
+  height: 520px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+`;
+
+const ShapeOne = styled.div`
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(#1845ad, #23a2f6);
+  left: -80px;
+  top: -80px;
+`;
+
+const ShapeTwo = styled.div`
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(to right, #ff512f, #f09819);
+  right: -30px;
+  bottom: -80px;
 `;
 
 const ContentWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: gray;
-  margin-top: 100px;
-  padding: 50px;
-  width: 500px;
-  height: 400px;
-  background-color: gray;
-  border-radius: 8px;
-  z-index: 1;
-`;
-
-const BgImage = styled.img`
+  height: 420px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.13);
   position: absolute;
-  transform: scale(0.6);
-  opacity: 0.2;
-  top: -400px;
-  left: -400px;
-  z-index: -1;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
 `;
 
 const Title = styled.p`

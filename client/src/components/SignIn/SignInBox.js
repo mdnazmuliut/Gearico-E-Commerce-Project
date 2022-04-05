@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { AccountContext } from "../Hooks/AccountContext";
 
-const SignInBox = ({setPageDisplay}) => {
-  const {setUserInfo} = useContext(AccountContext);
+const SignInBox = ({ setPageDisplay }) => {
+  const { setUserInfo } = useContext(AccountContext);
   const history = useHistory();
 
   const handleSubmit = (ev) => {
@@ -13,24 +13,29 @@ const SignInBox = ({setPageDisplay}) => {
     let password = ev.target[1].value;
     fetch("/api/login-account", {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({ email, password }),
       headers: {
         "Content-Type": "application/json",
       },
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === 200) {
-        setUserInfo(data.data)
-        history.push("/account")
-      } else setPageDisplay({ message: data.message, status: data.status, ref: "signin" })
-    })
-    .catch(err => console.log("500 server error", err));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          setUserInfo(data.data);
+          history.push("/account");
+        } else
+          setPageDisplay({
+            message: data.message,
+            status: data.status,
+            ref: "signin",
+          });
+      })
+      .catch((err) => console.log("500 server error", err));
   };
 
   return (
     <>
-      <Title>SIGN IN</Title>
+      <Title>Sign In</Title>
       <Form onSubmit={handleSubmit}>
         <Input type="email" name={"email"} placeholder={"Email"} required />
         <Input
@@ -46,9 +51,11 @@ const SignInBox = ({setPageDisplay}) => {
         Not a member?{" "}
         <button onClick={() => setPageDisplay("signup")}>Sign up now</button>
       </SignUpLine>
-      <ForgotPassword onClick={() => setPageDisplay("password")}>
-        Forgot your password?
-      </ForgotPassword>
+      <ButtonDiv>
+        <ForgotPassword onClick={() => setPageDisplay("password")}>
+          Forgot your password?
+        </ForgotPassword>
+      </ButtonDiv>
     </>
   );
 };
@@ -56,8 +63,10 @@ const SignInBox = ({setPageDisplay}) => {
 const Title = styled.p`
   font-size: 26px;
   font-weight: 600;
-  margin-bottom: 0;
+  margin-bottom: 3px;
   z-index: 1;
+  display: flex;
+  justify-content: center;
 `;
 
 const Form = styled.form`
@@ -71,7 +80,13 @@ const Form = styled.form`
 const Input = styled.input`
   font-size: 16px;
   opacity: 0.5;
-  /* width: 250px; */
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  outline: none;
+
+  ::placeholder {
+    color: #e5e5e5;
+  }
 `;
 
 const LoginButton = styled.button`
@@ -89,14 +104,14 @@ const LoginButton = styled.button`
   &:hover {
     background: slateblue;
   }
-  `;
+`;
 
 const Line = styled.div`
-    margin: 10px 0;
-    height: 0;
-    /* width: 320px; */
-    border-bottom: 1px solid white;
-  `;
+  margin: 10px 0;
+  height: 0;
+  /* width: 320px; */
+  border-bottom: 1px solid white;
+`;
 
 const SignUpLine = styled.div`
   margin: 10px 0;
@@ -116,14 +131,19 @@ const SignUpLine = styled.div`
   }
 `;
 
+const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const ForgotPassword = styled.button`
-   font-size: 14px;
-    font-weight: 700;
-    color: white;
-    /* outline: none; */
-    background: none;
-    border: none;
-    cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  /* outline: none; */
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
 
 export default SignInBox;

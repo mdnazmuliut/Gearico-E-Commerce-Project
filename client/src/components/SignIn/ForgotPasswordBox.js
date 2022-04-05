@@ -1,25 +1,30 @@
 import styled from "styled-components";
 
 const ForgotPasswordBox = ({ setPageDisplay }) => {
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    const email = ev.target[0].value
+    const email = ev.target[0].value;
     fetch("/api/check-email", {
       method: "POST",
-      body: JSON.stringify({email}),
+      body: JSON.stringify({ email }),
       headers: {
         "Content-Type": "application/json",
       },
     })
-    .then(res => res.json())
-    .then(data => setPageDisplay({message: data.message, ref: "password", status: data.status}))
-    .catch(err => console.log("error:", err))
-  }
+      .then((res) => res.json())
+      .then((data) =>
+        setPageDisplay({
+          message: data.message,
+          ref: "password",
+          status: data.status,
+        })
+      )
+      .catch((err) => console.log("error:", err));
+  };
 
   return (
     <>
-      <Title>RESET PASSWORD</Title>
+      <Title>Reset Password</Title>
       <Form onSubmit={handleSubmit}>
         <Input type="email" name={"email"} placeholder={"Email"} required />
         <PasswordButton type="submit">Reset your password</PasswordButton>
@@ -39,6 +44,8 @@ const Title = styled.p`
   font-weight: 600;
   margin-bottom: 0;
   z-index: 1;
+  display: flex;
+  justify-content: center;
 `;
 
 const Form = styled.form`
@@ -53,10 +60,17 @@ const Input = styled.input`
   font-size: 16px;
   opacity: 0.5;
   /* width: 250px; */
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  outline: none;
+
+  ::placeholder {
+    color: #e5e5e5;
+  }
 `;
 
 const Line = styled.div`
-margin: 10px 0;
+  margin: 10px 0;
   height: 0;
   margin: 10px 0;
   /* width: 320px; */
@@ -81,7 +95,7 @@ const PasswordButton = styled.button`
 `;
 
 const SignUpLine = styled.div`
-margin: 10px 0;
+  margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;

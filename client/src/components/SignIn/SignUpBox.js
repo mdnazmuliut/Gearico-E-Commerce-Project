@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const SignUpBox = ({ setPageDisplay }) => {
-  const [errorMsg, setErrorMsg] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -14,19 +14,28 @@ const SignUpBox = ({ setPageDisplay }) => {
     let password = ev.target[1].value;
     fetch("/api/create-account", {
       method: "POST",
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({ email, password }),
       headers: {
         "Content-Type": "application/json",
       },
     })
-    .then(res => res.json())
-    .then(data=> setPageDisplay({message: data.message, status: data.status, email: data.data, ref: "signup"}))
-    .catch(err => setPageDisplay({message: "Server error", ref: "signup"}));
+      .then((res) => res.json())
+      .then((data) =>
+        setPageDisplay({
+          message: data.message,
+          status: data.status,
+          email: data.data,
+          ref: "signup",
+        })
+      )
+      .catch((err) =>
+        setPageDisplay({ message: "Server error", ref: "signup" })
+      );
   };
 
   return (
     <>
-      <Title>SIGN UP</Title>
+      <Title>Sign Up</Title>
       <Form onSubmit={handleSubmit}>
         <Input type="email" name={"email"} placeholder={"Email"} required />
         <Input
@@ -60,6 +69,8 @@ const Title = styled.p`
   font-weight: 600;
   margin-bottom: 0;
   z-index: 1;
+  display: flex;
+  justify-content: center;
 `;
 
 const Form = styled.form`
@@ -73,7 +84,13 @@ const Form = styled.form`
 const Input = styled.input`
   font-size: 16px;
   opacity: 0.5;
-  /* width: 250px; */
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  outline: none;
+
+  ::placeholder {
+    color: #e5e5e5;
+  }
 `;
 
 const Line = styled.div`
@@ -101,7 +118,7 @@ const LoginButton = styled.button`
 `;
 
 const SignUpLine = styled.div`
-margin: 10px 0;
+  margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,9 +137,9 @@ margin: 10px 0;
 `;
 
 const ErrorMsg = styled.div`
-  display: ${({errorMsg}) => errorMsg ? "flex" : "none"};
+  display: ${({ errorMsg }) => (errorMsg ? "flex" : "none")};
   justify-content: center;
-  color: 	rgb(139, 0, 0);
+  color: rgb(139, 0, 0);
   margin-top: 20px;
   font-weight: 700;
   font-size: 20px;
