@@ -14,6 +14,12 @@ const {
   getCompanyById,
 } = require("./handlers");
 
+const {
+  checkEmail,
+  loginAccount,
+  createAccount,
+} = require("./handlersAccounts");
+
 express()
   .use(function (req, res, next) {
     res.header(
@@ -39,5 +45,9 @@ express()
   .get("/api/get-items/location/:location", getItemsByBodyLocation)
   .get("/api/get-company/:_id", getCompanyById)
   .post("/api/place-order", placeOrder)
+
+  .post("/api/check-email", checkEmail)
+  .post("/api/login-account", loginAccount)
+  .post("/api/create-account", createAccount)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
