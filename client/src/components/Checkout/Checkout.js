@@ -167,7 +167,6 @@ const Checkout = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          setCart([]);
           setSubStatus("confirmed");
         }
       })
@@ -223,6 +222,7 @@ const Checkout = () => {
               <Review
                 setStepColor={setStepColor}
                 formData={formData}
+                setFormData={setFormData}
                 handleClickBack={handleClickBack}
               />
             )}

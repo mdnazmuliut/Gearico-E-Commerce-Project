@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { AccountContext } from "../Hooks/AccountContext";
 
-const Review = ({ formData, handleClickBack, setStepColor }) => {
+const Review = ({ formData, handleClickBack, setStepColor, setFormData }) => {
+  const { userInfo } = useContext(AccountContext)
+  
+  if (formData.shipping.firstName === "") {
+    let newData = userInfo;
+    newData.shipping["email"] = userInfo.email;
+    setFormData(newData);
+  }
+
   let cardNumHide = [];
   let cvvNumHide = [];
+
+  
 
   let cardNoDisp = (card) => {
     if (card) {

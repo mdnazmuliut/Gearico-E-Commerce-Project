@@ -4,9 +4,11 @@ import truck from "../../assets/truck.gif";
 import modalbg from "../../assets/ModalBg.jpg";
 import { useContext } from "react";
 import { DataContext } from "../Hooks/useContext";
+import { useHistory } from "react-router-dom";
 
 const Confirmation = ({ subStatus, setSubStatus }) => {
-  const { total } = useContext(DataContext);
+  const { total, setCart } = useContext(DataContext);
+  const history = useHistory();
 
   let message = "";
 
@@ -19,7 +21,12 @@ const Confirmation = ({ subStatus, setSubStatus }) => {
 
   if (subStatus !== "idle")
     return (
-      <PageWrapper onClick={() => setSubStatus("idle")}>
+      <PageWrapper
+        onClick={() => {
+          history.push("/")          
+          setCart([]);
+        }}
+      >
         <ContentWrapper onClick={(ev) => ev.stopPropagation()}>
           <Title>Gearico</Title>
           <Message>{message}</Message>
@@ -106,7 +113,6 @@ const Button = styled.button`
   &:active {
     transform: scale(0.95);
   }
-
 `;
 
 const TrackOrder = styled.p`
