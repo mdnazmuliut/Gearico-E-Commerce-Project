@@ -20,16 +20,16 @@ const SectionFour = () => {
       {/* <Title>Find Us On</Title> */}
       <Wrapper>
         <SponsorWrap target="_blank" href="https://www.amazon.com/">
-          <SponsorImg src={amazon} alt="Amazon" class="sponsor__img" />
+          <SponsorImg src={amazon} alt="Amazon" className="sponsor__img" />
         </SponsorWrap>
         <SponsorWrap target="_blank" href="https://www.shopify.com/">
-          <SponsorImg src={shopify} alt="Shopify" class="sponsor__img" />
+          <SponsorImg src={shopify} alt="Shopify" className="sponsor__img" />
         </SponsorWrap>
         <SponsorWrap target="_blank" href="https://www.paypal.com/">
-          <SponsorImg src={paypal} alt="PayPal" class="sponsor__img" />
+          <SponsorImg src={paypal} alt="PayPal" className="sponsor__img" />
         </SponsorWrap>
         <SponsorWrap target="_blank" href="https://www.slack.com/">
-          <SponsorImg src={slack} alt="Slack" class="sponsor__img" />
+          <SponsorImg src={slack} alt="Slack" className="sponsor__img" />
         </SponsorWrap>
       </Wrapper>
     </Section>

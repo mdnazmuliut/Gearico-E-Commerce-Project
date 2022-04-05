@@ -1,18 +1,20 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { DataContext } from "../../Hooks/useContext";
-
 import { useHistory } from "react-router-dom";
 
 const SectionThree = () => {
-  const { data } = useContext(DataContext);
-
+  const { data, getItems } = useContext(DataContext);
   const history = useHistory();
+
+  useEffect(() => {
+    getItems();
+  }, [])
 
   if (!data) {
     return <p>Loading...</p>;
   }
-  const tenFeaturedItems = data.slice(0, 10);
+  const tenFeaturedItems = data;
 
   return (
     <Section>
@@ -22,9 +24,10 @@ const SectionThree = () => {
           return (
             <>
               <FeaturedProductsWrap
+                key={"wrap" + item._id}
                 onClick={() => history.push(`/products/id/${item._id}`)}
               >
-                <ProductImg src={item.imageSrc} />
+                <ProductImg src={item.imageSrc} key={"img" + item._id} />
               </FeaturedProductsWrap>
             </>
           );

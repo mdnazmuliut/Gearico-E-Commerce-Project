@@ -21,7 +21,7 @@ const SignInBox = ({setPageDisplay}) => {
     .then(res => res.json())
     .then(data => {
       if (data.status === 200) {
-        setUserInfo({email: data.data})
+        setUserInfo(data.data)
         history.push("/account")
       } else setPageDisplay({ message: data.message, status: data.status, ref: "signin" })
     })
