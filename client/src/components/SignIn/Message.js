@@ -1,11 +1,18 @@
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { AccountContext } from "../Hooks/AccountContext";
 
 const Message = ({ setPageDisplay, pageDisplay}) => {
+    const {setUserInfo} = useContext(AccountContext);
     const history = useHistory();
     
     if (pageDisplay.status === 200 && pageDisplay.ref === "signup") {
-        setTimeout(()=> history.push("/account") , 4000)
+        
+        setTimeout(()=> {
+            history.push("/account") 
+            setUserInfo(pageDisplay.email)
+        }, 4000)
     }
 
     return (

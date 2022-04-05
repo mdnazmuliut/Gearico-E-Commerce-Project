@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 const SignUpBox = ({ setPageDisplay }) => {
   const [errorMsg, setErrorMsg] = useState(false)
-  const history = useHistory();
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -22,7 +20,7 @@ const SignUpBox = ({ setPageDisplay }) => {
       },
     })
     .then(res => res.json())
-    .then(data=> setPageDisplay({message: data.message, status: data.status, ref: "signup"}))
+    .then(data=> setPageDisplay({message: data.message, status: data.status, email: data.data, ref: "signup"}))
     .catch(err => setPageDisplay({message: "Server error", ref: "signup"}));
   };
 
