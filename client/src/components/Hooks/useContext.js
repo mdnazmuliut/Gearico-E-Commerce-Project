@@ -8,14 +8,14 @@ export const DataProvider = ({ children }) => {
   const [cart, setCart] = usePersistedState([], "cart");
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
+  const getItems = () => {
     fetch("/api/get-items")
       .then((res) => res.json())
       .then((data) => {
         console.log(data.data);
         setData(data.data);
       });
-  }, []);
+  }
 
   // updating the CART total
   useEffect(() => {
@@ -31,7 +31,7 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider value={{ data, cart, setCart, total, calcItemTotal }}>
+    <DataContext.Provider value={{ data, cart, setCart, total, calcItemTotal, getItems }}>
       {children}
     </DataContext.Provider>
   );

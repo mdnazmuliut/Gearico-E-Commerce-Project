@@ -7,21 +7,18 @@ export const AccountProvider = ({ children }) => {
     const [userOrders, setUserOrders] = useState(null)
 
   useEffect(() => {
-      if (userInfo) {
-
+      if (!userInfo) return 
         fetch("/api/get-orders", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
              },
-             body: JSON.stringify(userInfo.email),
+             body: JSON.stringify(userInfo),
         })
           .then((res) => res.json())
           .then((data) => {
             setUserOrders(data.data);
-          });
-      }
-      
+          });      
   }, [userInfo]);
 
   return (
