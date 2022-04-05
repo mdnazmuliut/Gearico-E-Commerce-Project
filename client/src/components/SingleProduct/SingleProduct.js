@@ -76,7 +76,7 @@ const SingleProduct = ({ modal, setModal }) => {
       <Wrapper onClick={(ev) => ev.stopPropagation()}>
         <ItemContainer>
           <LeftDiv>
-            <img src={productInfo.imageSrc} />
+            <ProductImg src={productInfo.imageSrc} />
           </LeftDiv>
           <RightDiv>
             <Title>{productInfo.name}</Title>
@@ -88,10 +88,9 @@ const SingleProduct = ({ modal, setModal }) => {
               </Price>
             </InfoBox>
             <QuantityBox>
-              Quantity:
+              <p>Quantity:</p>
               <select
-                defaultValue={1}
-                placeholder="1"
+                placeholder="Quantity"
                 onChange={(ev) => setQuantity(ev.target.value)}
               >
                 {numArray.map((number) => (
@@ -122,26 +121,43 @@ const Modal = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(55, 55, 55, 0.8);
+  background-color: rgba(55, 55, 55, 0.9);
   z-index: 200;
 `;
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Open Sans", sans-serif;
-  background-color: black;
-  padding: 200px;
-  /* box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75); */
+  border-radius: 10px;
+  width: 750px;
+  height: 350px;
+  background-color: #f8f8ff;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s;
+
+  /* &:hover {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.6),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  } */
 `;
 
 const ItemContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const LeftDiv = styled.div`
   margin: 0 20px;
+  padding: 30px;
+  width: 45%;
+  text-align: center;
+  float: left;
+`;
+
+const ProductImg = styled.img`
+  padding: 30px;
+  float: left;
+  height: 240px;
+  width: 240px;
 `;
 
 const RightDiv = styled.div`
@@ -151,39 +167,94 @@ const RightDiv = styled.div`
   width: 300px;
 `;
 
-const Title = styled.div`
-  font-size: 22px;
+const Title = styled.p`
+  color: #515151;
+  margin: 30px 0;
+  text-transform: uppercase;
   font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 10px;
 `;
 
-const Price = styled.div`
-  font-size: 22px;
-  font-weight: 700;
+const Price = styled.p`
+  color: #515151;
+  font-weight: 300;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 300;
 `;
 
 const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  > * {
-    margin: 8px 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #727272;
+  margin: 0;
+
+  > h4 {
+    font-size: 15px;
   }
 `;
 
 const BuyButton = styled.button`
-  margin: 10px 0;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 8px 50px;
-  background-color: #00416a;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  outline: 0;
+  border: 0;
+  background: none;
+  border: 1px solid #d9d9d9;
+  padding: 8px 0px;
+  color: #515151;
+  text-transform: uppercase;
+  width: 125px;
+  font-family: inherit;
+  margin-right: 5px;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  font-weight: 500;
+
+  &:hover {
+    border: 1px solid rgb(120, 120, 255);
+    color: rgb(120, 120, 255);
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 `;
 
 const QuantityBox = styled.div`
   > select {
-    margin: 0 8px;
+    outline: 0;
+    border: 0;
+    background: none;
+    border: 1px solid #d9d9d9;
+    padding: 8px 0px;
+    color: #515151;
+    text-transform: uppercase;
+    width: 125px;
+    font-family: inherit;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    font-weight: 500;
+
+    display: inline-block;
+    position: absolute;
+    margin-left: 140px;
+  }
+
+  > select:focus {
+    border: 1px solid rgb(120, 120, 255);
+    color: black;
+    cursor: pointer;
+  }
+
+  > p {
+    position: relative;
+    left: 140px;
+    bottom: 5px;
+    color: #515151;
   }
 `;
 
