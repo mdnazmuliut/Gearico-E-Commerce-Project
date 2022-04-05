@@ -189,6 +189,7 @@ const StepCircle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: -1;
 `;
 
 const CircleOne = styled.div`
