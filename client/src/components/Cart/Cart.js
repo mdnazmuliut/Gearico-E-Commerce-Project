@@ -28,12 +28,13 @@ const Cart = () => {
         {cart.length > 0 &&
           cart.map((item, index) => {
             return (
-              <CartItem 
-                item={item} 
-                index={index} 
+              <CartItem
+                item={item}
+                index={index}
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
-                key={item.productInfo._id} />
+                key={item.productInfo._id}
+              />
             );
           })}
 
@@ -44,7 +45,10 @@ const Cart = () => {
 
         <CheckoutButtonDiv>
           <SpacerDivLeft />
-          <CheckoutButton onClick={() => history.push("/checkout")}>
+          <CheckoutButton
+            disabled={cart.length > 0 ? false : true}
+            onClick={() => history.push("/checkout")}
+          >
             Checkout
           </CheckoutButton>
         </CheckoutButtonDiv>
