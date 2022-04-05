@@ -181,15 +181,15 @@ const Checkout = () => {
         <StepsHead>
           {/* <ProgressBar /> */}
           <StepCircle>
-            <CircleOne style={{ backgroundColor: stepColor }}>1</CircleOne>
+            <CircleOne style={{ backgroundColor: inputDisplay >= 1 ? "green": "gray" }}>1</CircleOne>
             <div>Shipping</div>
           </StepCircle>
           <StepCircle>
-            <CircleTwo style={{ backgroundColor: stepColor }}>2</CircleTwo>
+            <CircleTwo style={{ backgroundColor: inputDisplay >= 2 ? "green": "gray" }}>2</CircleTwo>
             <div>Billing</div>
           </StepCircle>
           <StepCircle>
-            <CircleThree style={{ backgroundColor: stepColor }}>3</CircleThree>
+            <CircleThree style={{ backgroundColor: inputDisplay >= 3 ? "green": "gray" }}>3</CircleThree>
             <div>Review</div>
           </StepCircle>
         </StepsHead>

@@ -18,6 +18,7 @@ const {
   checkEmail,
   loginAccount,
   createAccount,
+  getOrdersByEmail,
 } = require("./handlersAccounts");
 
 express()
@@ -49,5 +50,6 @@ express()
   .post("/api/check-email", checkEmail)
   .post("/api/login-account", loginAccount)
   .post("/api/create-account", createAccount)
+  .post("/api/get-orders", getOrdersByEmail)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
