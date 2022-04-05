@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import { DataContext } from "../Hooks/useContext";
+import { AccountContext } from "../Hooks/AccountContext";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import CartItem from "./CartItem";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const { userInfo } = useContext(AccountContext);
   const { cart, setCart, calcItemTotal, total } = useContext(DataContext);
   const history = useHistory();
 
@@ -45,12 +48,28 @@ const Cart = () => {
 
         <CheckoutButtonDiv>
           <SpacerDivLeft />
-          <CheckoutButton
-            disabled={cart.length > 0 ? false : true}
-            onClick={() => history.push("/checkout")}
-          >
-            Checkout
-          </CheckoutButton>
+          <CheckoutDivRight>
+            {userInfo ? (
+              <CheckoutButton
+                disabled={cart.length > 0 ? false : true}
+                onClick={() => history.push("/checkout")}
+              >
+                Checkout
+              </CheckoutButton>
+            ) : (
+              <>
+                <CheckoutButton
+                  disabled={cart.length > 0 ? false : true}
+                  onClick={() => history.push("/checkout")}
+                >
+                  Guest Checkout
+                </CheckoutButton>
+                <SignInLink to={"/signin"}>
+                  Sign in/create an account
+                </SignInLink>
+              </>
+            )}
+          </CheckoutDivRight>
         </CheckoutButtonDiv>
       </MainContainer>
     </Wrapper>
@@ -85,6 +104,12 @@ const CartTotal = styled.div`
 const CheckoutButtonDiv = styled.div`
   display: flex;
 `;
+
+const CheckoutDivRight = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const CheckoutButton = styled.button`
   margin: 10px 0;
   font-size: 16px;
@@ -94,6 +119,15 @@ const CheckoutButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  &:disabled {
+    background-color: gray;
+  }
+`;
+
+const SignInLink = styled(Link)`
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  font-weight: 300;
 `;
 
 export default Cart;
