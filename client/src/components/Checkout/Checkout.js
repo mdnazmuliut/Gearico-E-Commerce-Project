@@ -6,11 +6,13 @@ import Review from "./Review";
 import CartInfo from "./CartInfo";
 import { DataContext } from "../Hooks/useContext";
 import Confirmation from "./Confirmation";
+import { AccountContext } from "../Hooks/AccountContext";
 
 const Checkout = () => {
   const [inputDisplay, setInputDisplay] = useState(1);
   const { cart, total, setCart } = useContext(DataContext);
   const [stepColor, setStepColor] = useState("grey");
+  const { userInfo } = useContext(AccountContext)
 
   const initialState = {
     shipping: {
@@ -54,13 +56,7 @@ const Checkout = () => {
     });
 
     if (section === "shipping") {
-      //   if (
-      //     !formData[section].email.split("").includes("@") ||
-      //     !hasNumber.test(formData[section].address) ||
-      //     !hasPostalCode.test(formData[section].postcode)
-      //   ) {
-      //     validate = "missing-data";
-      //   }
+  
       if (!formData[section].email.split("").includes("@")) {
         validate = "missing-data";
         // (validate = "@ missing in email!");
@@ -120,18 +116,22 @@ const Checkout = () => {
     // let goNextPage = true;
     setErrMsg(false);
     // setMsg("");
-    handleValidation(section);
+    if (!userInfo) {
+      // status = "success"
+      handleValidation(section);
+      if (status === "success") {
+        inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
+      } else {
+        setErrMsg(true);
+      }
+    } else inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
 
     console.log("status:", status);
 
     
 
 
-    if (status === "success") {
-      inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
-    } else {
-      setErrMsg(true);
-    }
+
   };
 
   // BACK BUTTON - decrementing the inputDisplay
@@ -317,28 +317,6 @@ const InputSection = styled.div`
   justify-content: center;
 `;
 
-// const ButtonWrapper = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   margin: 50px;
-// `;
-// const ButtonBack = styled.button`
-//   border: none;
-//   border-radius: 10px;
-//   color: black;
-//   width: 100px;
-//   font-size: 18px;
-//   cursor: pointer;
-// `;
-// const ButtonNext = styled.button`
-//   border: none;
-//   border-radius: 10px;
-//   color: black;
-//   margin-left: 20px;
-//   width: 100px;
-//   font-size: 18px;
-//   cursor: pointer;
-// `;
 const PlaceOrderBtn = styled.button`
   margin: auto;
   border: none;

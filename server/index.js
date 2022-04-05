@@ -12,7 +12,7 @@ const {
   getItemsByBodyLocation,
   placeOrder,
   getCompanyById,
-} = require("./handlers");
+} = require("./handlersLocal");
 
 const {
   checkEmail,

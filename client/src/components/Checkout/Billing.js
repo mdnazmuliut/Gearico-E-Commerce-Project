@@ -28,7 +28,7 @@ const Billing = ({
               type="text"
               placeholder="Cardholder Name"
               section={section}
-              defaultValue={userInfo?.shipping?.fullName || formData.billing.fullName}
+              defaultValue={userInfo?.billing?.fullName || formData.billing.fullName}
               handleChange={handleChange}
             />
             <Input
@@ -36,7 +36,7 @@ const Billing = ({
               type="text"
               placeholder="Card Number"
               section={section}
-              defaultValue={userInfo?.shipping?.cardNo || formData.billing.cardNo}
+              defaultValue={userInfo?.billing?.cardNo || formData.billing.cardNo}
               handleChange={handleChange}
             />
             <FormGroup>
@@ -45,7 +45,7 @@ const Billing = ({
                 type="text"
                 placeholder="MM"
                 section={section}
-                defaultValue={userInfo?.shipping?.expMonth || formData.billing.expMonth}
+                defaultValue={userInfo?.billing?.expMonth || formData.billing.expMonth}
                 handleChange={handleChange}
               />
               <Input
@@ -53,7 +53,7 @@ const Billing = ({
                 type="text"
                 placeholder="YY"
                 section={section}
-                defaultValue={userInfo?.shipping?.expYear || formData.billing.expYear}
+                defaultValue={userInfo?.billing?.expYear || formData.billing.expYear}
                 handleChange={handleChange}
               />
             </FormGroup>
@@ -62,7 +62,7 @@ const Billing = ({
               type="text"
               placeholder="CVC / CVV"
               section={section}
-              defaultValue={userInfo?.shipping?.cvv || formData.billing.cvv}
+              defaultValue={userInfo?.billing?.cvv || formData.billing.cvv}
               handleChange={handleChange}
             />
           </FormContent>

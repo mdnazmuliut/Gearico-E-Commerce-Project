@@ -18,21 +18,25 @@ const client = new MongoClient(MONGO_URI, options);
 const db = client.db("ecommerce");
 
 const checkEmail = async (req, res) => {
-    try {
+  try {
+      const client = new MongoClient(MONGO_URI, options);
+      const db = client.db("ecommerce");
     await client.connect();
     const email = req.body.email
 
-    const user = await db.collection("accounts").findOne({ "email": email }).toArray()
+    const user = await db.collection("accounts").findOne({ "email": email })
     
-    console.log(user.length);
+    console.log(user);
     
-    (user.length > 0) 
+    (user) 
     ? res.status(200).json({ status: 200, data: user.email, message: "An email has been sent with instructions on how to reset your password." })
     : res.status(404).json({ status: 404, message: "Email not found" })
   } catch (err) {
     res.status(500).json({ status: 500, message: err.message });
+  } finally {
+
+    client.close();
   }
-  client.close();
 };
 
 
@@ -44,7 +48,7 @@ const loginAccount = async (req, res) => {
 
     const user = await db.collection("accounts").find({ "email": email }).toArray();
     
-    console.log(user);
+    // console.log(user);
 
     (user.length > 0 && user[0].password === password)
     ? res.status(200).json({ status: 200, data: user[0], message: "Request successful" })
@@ -66,6 +70,7 @@ const createAccount = async (req, res) => {
     console.log(user);
     console.log(email);
     console.log(password);
+
     
     if (user.length > 0) {
         res.status(400).json({ status: 400, data: email, message: "Email address already connected to an account"})
@@ -106,7 +111,9 @@ const updateAccountInfo = async (req, res) => {
     const billing = req.body.billing || null;
 
     const update = await db.collection("accounts").updateOne({ "email": email }, { $set: {shipping, billing} })
-
+    
+    console.log(update);
+    
     (update.modifiedCount > 0)
     ? res.status(200).json({ status: 200, data: req.body, message: "Request successful" })
     : res.status(400).json({ status: 404, data: email, message: "Bad request" });
