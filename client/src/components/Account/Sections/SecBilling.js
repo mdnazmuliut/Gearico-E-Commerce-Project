@@ -11,7 +11,7 @@ const SecBilling = () => {
     ev.preventDefault();
     setStatus("...");
     let updateObject = { ...userInfo };
-    updateObject.billing = {
+    updateObject["billing"] = {
       fullName: ev.target[0].value,
       cardNo: ev.target[1].value,
       expMonth: ev.target[2].value,
@@ -38,7 +38,7 @@ const SecBilling = () => {
 
   return (
     <Wrapper>
-      <FormContent>
+      <FormContent onSubmit={(ev) => handleUpdate(ev)}>
         <Input
           name="fullName"
           type="text"

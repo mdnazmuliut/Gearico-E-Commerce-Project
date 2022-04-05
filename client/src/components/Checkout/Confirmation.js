@@ -107,10 +107,6 @@ const Button = styled.button`
     transform: scale(0.95);
   }
 
-  /* &:disabled {
-    background-color: rgba(0, 0, 0, 0.3);
-    cursor: default;
-  } */
 `;
 
 const TrackOrder = styled.p`
