@@ -11,10 +11,11 @@ const ErrorPage = () => {
           <Bomb />
         </h1>
       </div>
-      <h2>An unknown error has occurred.</h2>
-      <p>
+      <h2>404</h2>
+      <PageError>Page not found!</PageError>
+      <GoHome>
         Please go to <LinkHome to="/"> Home</LinkHome> page
-      </p>
+      </GoHome>
     </Wrapper>
   );
 };
@@ -26,6 +27,17 @@ const Wrapper = styled.div`
 const Bomb = styled(GiUnlitBomb)`
   width: 80px;
   height: 80px;
+`;
+
+const PageError = styled.div`
+  margin: 10px;
+  font-size: 32px;
+  font-weight: bold;
+`;
+
+const GoHome = styled.div`
+  margin: 10px;
+  font-size: 14px;
 `;
 
 const LinkHome = styled(Link)`
