@@ -5,7 +5,7 @@ export default createGlobalStyle`
     /* background-color: #050503; */
     background-color: #131313;
     color: #fff;
-    font-family: "Raleway", sans-serif;;
+    font-family: "Raleway", sans-serif;
   }
 
   html, body, div, span, applet, object, iframe,

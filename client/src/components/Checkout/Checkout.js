@@ -10,6 +10,7 @@ import Confirmation from "./Confirmation";
 const Checkout = () => {
   const [inputDisplay, setInputDisplay] = useState(1);
   const { cart, total } = useContext(DataContext);
+  const [stepColor, setStepColor] = useState("grey");
 
   const initialState = {
     shipping: {
@@ -115,12 +116,16 @@ const Checkout = () => {
 
   // NEXT BUTTON - verifying all fields have data, then incrementing the inputDisplay
   const handleClickNext = (ev, section) => {
+
     // let goNextPage = true;
     setErrMsg(false);
     // setMsg("");
     handleValidation(section);
 
     console.log("status:", status);
+
+    
+
 
     if (status === "success") {
       inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
@@ -174,16 +179,17 @@ const Checkout = () => {
       <CheckoutContents>
         <Confirmation subStatus={subStatus} setSubStatus={setSubStatus} />
         <StepsHead>
+          {/* <ProgressBar /> */}
           <StepCircle>
-            <Circle>1</Circle>
+            <CircleOne style={{ backgroundColor: stepColor }}>1</CircleOne>
             <div>Shipping</div>
           </StepCircle>
           <StepCircle>
-            <Circle>2</Circle>
+            <CircleTwo style={{ backgroundColor: stepColor }}>2</CircleTwo>
             <div>Billing</div>
           </StepCircle>
           <StepCircle>
-            <Circle>3</Circle>
+            <CircleThree style={{ backgroundColor: stepColor }}>3</CircleThree>
             <div>Review</div>
           </StepCircle>
         </StepsHead>
@@ -191,6 +197,7 @@ const Checkout = () => {
           <InputSection>
             {inputDisplay === 1 && (
               <Shipping
+                setStepColor={setStepColor}
                 formData={formData}
                 handleChange={handleChange}
                 handleClickNext={handleClickNext}
@@ -198,6 +205,7 @@ const Checkout = () => {
             )}
             {inputDisplay === 2 && (
               <Billing
+                setStepColor={setStepColor}
                 formData={formData}
                 handleChange={handleChange}
                 handleClickBack={handleClickBack}
@@ -205,7 +213,11 @@ const Checkout = () => {
               />
             )}
             {inputDisplay === 3 && (
-              <Review formData={formData} handleClickBack={handleClickBack} />
+              <Review
+                setStepColor={setStepColor}
+                formData={formData}
+                handleClickBack={handleClickBack}
+              />
             )}
           </InputSection>
           <CartInfo cart={cart} total={total} />
@@ -217,7 +229,6 @@ const Checkout = () => {
         >
           Place Order
         </PlaceOrderBtn>
-        {/* <PlaceOrderBtn onClick={handleClick}>Place Order</PlaceOrderBtn> */}
       </CheckoutContents>
     </>
   );
@@ -235,10 +246,23 @@ const Main = styled.div`
 
 const StepsHead = styled.div`
   display: flex;
+  position: relative;
   flex-direction: row;
   margin: 50px;
-  justify-content: space-around;
+  justify-content: space-evenly;
   font-size: 24px;
+`;
+
+const ProgressBar = styled.div`
+  background-color: green;
+  position: absolute;
+  top: 35%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 100%;
+  z-index: -1;
+  transition: 0.4s ease;
 `;
 
 const StepCircle = styled.div`
@@ -246,15 +270,37 @@ const StepCircle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: -1;
 `;
 
-const Circle = styled.div`
+const CircleOne = styled.div`
   margin-bottom: 10px;
+  padding-top: 12px;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
   text-align: center;
-  background-color: palevioletred;
+`;
+
+const CircleTwo = styled.div`
+  margin-bottom: 10px;
+  padding-top: 12px;
+  border-radius: 50%;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+`;
+
+const CircleThree = styled.div`
+  margin-bottom: 10px;
+  padding-top: 12px;
+  border-radius: 50%;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
 `;
 
 const InputSection = styled.div`
@@ -263,28 +309,28 @@ const InputSection = styled.div`
   justify-content: center;
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 50px;
-`;
-const ButtonBack = styled.button`
-  border: none;
-  border-radius: 10px;
-  color: black;
-  width: 100px;
-  font-size: 18px;
-  cursor: pointer;
-`;
-const ButtonNext = styled.button`
-  border: none;
-  border-radius: 10px;
-  color: black;
-  margin-left: 20px;
-  width: 100px;
-  font-size: 18px;
-  cursor: pointer;
-`;
+// const ButtonWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   margin: 50px;
+// `;
+// const ButtonBack = styled.button`
+//   border: none;
+//   border-radius: 10px;
+//   color: black;
+//   width: 100px;
+//   font-size: 18px;
+//   cursor: pointer;
+// `;
+// const ButtonNext = styled.button`
+//   border: none;
+//   border-radius: 10px;
+//   color: black;
+//   margin-left: 20px;
+//   width: 100px;
+//   font-size: 18px;
+//   cursor: pointer;
+// `;
 const PlaceOrderBtn = styled.button`
   margin: auto;
   border: none;
@@ -295,6 +341,12 @@ const PlaceOrderBtn = styled.button`
   font-size: 18px;
   cursor: pointer;
   text-align: center;
+  transition: 0.2s;
+
+  &:active {
+    box-shadow: 0 0.5em 0.5em -0.2em grey;
+    transform: translateY(-0.25em);
+  }
 `;
 
 export default Checkout;

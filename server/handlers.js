@@ -28,9 +28,6 @@ const getItems = async (req, res) => {
   try {
     await client.connect();
 
-    console.log("limit---", limit);
-    console.log("start---", start);
-
     const items = await db
       .collection("items")
       .find()

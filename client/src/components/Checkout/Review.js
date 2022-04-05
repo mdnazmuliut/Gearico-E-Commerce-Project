@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Review = ({
-  formData,
-  handleClickBack,
-}) => {
-
+const Review = ({ formData, handleClickBack, setStepColor }) => {
   let cardNumHide = [];
   let cvvNumHide = [];
 
@@ -44,23 +40,25 @@ const Review = ({
         <Header>Review</Header>
 
         <CustomerInfo>
-          <TextHeader>Customer Information:</TextHeader>
-          <Text>{formData.shipping.firstName}</Text>
-          <Text>{formData.shipping.lastName}</Text>
+          <TextHeader>Customer Information</TextHeader>
+          <Text>
+            {formData.shipping.firstName} {formData.shipping.lastName}
+          </Text>
           <Text>{formData.shipping.email}</Text>
         </CustomerInfo>
 
         <ShippingInfo>
           <TextHeader>Shipping Information</TextHeader>
           <Text>{formData.shipping.address}</Text>
-          <Text>{formData.shipping.city}</Text>
-          <Text>{formData.shipping.province}</Text>
+          <Text>
+            {formData.shipping.city}, {formData.shipping.province}
+          </Text>
           <Text>{formData.shipping.postcode}</Text>
           <Text>{formData.shipping.country}</Text>
         </ShippingInfo>
 
         <PaymentDetails>
-          <TextHeader>Billing Information:</TextHeader>
+          <TextHeader>Billing Information</TextHeader>
           <Text>{formData.billing.fullName}</Text>
           <Text>{cardNumHide}</Text>
           <Text>
@@ -71,7 +69,14 @@ const Review = ({
         </PaymentDetails>
       </Main>
       <ButtonWrapper>
-        <ButtonBack onClick={handleClickBack}>Back</ButtonBack>
+        <ButtonBack
+          onClick={() => {
+            handleClickBack();
+            setStepColor("grey");
+          }}
+        >
+          Back
+        </ButtonBack>
       </ButtonWrapper>
     </>
   );
@@ -80,9 +85,11 @@ const Review = ({
 const Main = styled.div`
   margin: 20px;
   width: 500px;
-  background-color: beige;
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 400px;
 `;
 
 const Header = styled.div`
@@ -105,7 +112,8 @@ const ShippingInfo = styled.div`
 
 const Text = styled.div`
   color: black;
-  font-size: 18px;
+  font-size: 17px;
+  margin: 4px 0;
 `;
 
 const TextHeader = styled.div`
@@ -129,6 +137,14 @@ const ButtonBack = styled.button`
   width: 100px;
   font-size: 18px;
   cursor: pointer;
+  padding: 8px;
+  transition: 0.2s;
+
+  &:active {
+    background-color: rgba(169, 169, 169);
+    color: white;
+    font-weight: bold;
+  }
 `;
 
 export default Review;

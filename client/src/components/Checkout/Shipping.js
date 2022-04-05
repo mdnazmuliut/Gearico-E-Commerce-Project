@@ -6,9 +6,9 @@ const Shipping = ({
   formData,
   handleChange,
   handleClickNext,
+  setStepColor,
 }) => {
-
-  const section="shipping";
+  const section = "shipping";
 
   return (
     <>
@@ -87,10 +87,17 @@ const Shipping = ({
               />
             </FormGroup>
           </FormContent>
+          <Logo>Gearico</Logo>
         </Wrapper>
       </Main>
       <ButtonWrapper>
-        <ButtonNext onClick={(ev) => handleClickNext(ev, section)}>Next</ButtonNext>
+        <ButtonNextOne
+          onClick={(ev) => {
+            handleClickNext(ev, section);
+          }}
+        >
+          Next
+        </ButtonNextOne>
       </ButtonWrapper>
     </>
   );
@@ -100,9 +107,11 @@ const Main = styled.form`
   margin: 20px;
   /* padding: 10px; */
   width: 500px;
-  background-color: beige;
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 400px;
 `;
 
 const Header = styled.div`
@@ -113,7 +122,7 @@ const Header = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin: 20px;
+  margin: 40px 20px;
   padding: 0 20px;
 `;
 const FormContent = styled.div`
@@ -134,20 +143,39 @@ const FormGroup = styled.div`
   }
 `;
 
+const Logo = styled.h2`
+  margin-top: 10px;
+  content: "GEARICO";
+  font-size: 5em;
+  font-weight: 800;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.1);
+  cursor: default;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 50px;
 `;
 
-const ButtonNext = styled.button`
+const ButtonNextOne = styled.button`
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   color: black;
   margin-left: 20px;
   width: 100px;
   font-size: 18px;
+  padding: 8px;
   cursor: pointer;
+  transition: 0.2s;
+
+  &:active {
+    background-color: rgba(169, 169, 169);
+    color: white;
+    font-weight: bold;
+    transform: scale(0.97);
+  }
 `;
 
 export default Shipping;

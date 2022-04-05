@@ -7,7 +7,9 @@ import SingleProduct from "./SingleProduct/SingleProduct";
 import Cart from "./Cart/Cart";
 import Checkout from "./Checkout/Checkout";
 import ErrorPage from "./ErrorPage";
-//comment
+import SignIn from "./SignIn/SignIn";
+import AccountPage from "./Account/AccountPage";
+
 const App = () => {
   return (
     <>
@@ -29,6 +31,12 @@ const App = () => {
           </Route>
           <Route path="/checkout">
             <Checkout />
+          </Route>
+          <Route path="/signin">
+            <SignIn />
+          </Route>
+          <Route path="/account">
+            <AccountPage />
           </Route>
           <Route path="*">
             <ErrorPage />

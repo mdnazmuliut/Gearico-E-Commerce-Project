@@ -3,39 +3,58 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { DataContext } from "../Hooks/useContext";
 
-const SingleProduct = ({modal, setModal}) => {
+const SingleProduct = ({ modal, setModal }) => {
   const [productInfo, setProductInfo] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { setCart, cart, calcItemTotal } = useContext(DataContext);
   const history = useHistory();
 
   // getting product id from params
-  const params = useParams().productId
+  const params = useParams().productId;
   const productId = params || modal;
 
   // fetching the product info
   useEffect(() => {
     fetch(`/api/get-item/${productId}`)
-    .then((res) => res.json())
-    .then((data) => setProductInfo(data.data))
-    .catch((err) => console.log("error:", err));
+      .then((res) => res.json())
+      .then((data) => setProductInfo(data.data))
+      .catch((err) => console.log("error:", err));
   }, [productId]);
-  
+
   // updating the cart with product info, quanity and total price
   const handleClick = () => {
-    setCart([
-      ...cart,
-      {
+    // checking the cart to see if the item is already there
+    let dupeIndex = 0;
+    const duplicateItem = cart.filter((item, index) => {
+      console.log("index in here?", index);
+      if (item.productInfo._id === productInfo._id) {
+        dupeIndex = index;
+        return item;
+      }
+    });
+
+    let newCart = [...cart];
+    // if item is a duplicate, updating the quantity only
+    if (duplicateItem.length > 0) {
+      newCart[dupeIndex].qnt =
+        cart[dupeIndex].qnt + Number(quantity) >
+        cart[dupeIndex].productInfo.numInStock
+          ? cart[dupeIndex].productInfo.numInStock
+          : cart[dupeIndex].qnt + Number(quantity);
+    } else {
+      // else, adding the new item to the "cart" array
+      newCart.push({
         productInfo,
         qnt: Number(quantity),
         itemTotal: calcItemTotal(productInfo.price, quantity),
-      },
-    ]);
+      });
+    }
+    setCart(newCart);
     history.push("/cart");
   };
-  
+
   if (!modal && !params) return null;
-  
+
   // returning a loading message until server has responded with product data
   if (!productInfo) return <div>Loading...</div>;
 
@@ -48,64 +67,64 @@ const SingleProduct = ({modal, setModal}) => {
   // closing the modal if user clicks outside the main Wrapper
   // if params were used to navigate here, returning to the Products page
   const handleModalClose = () => {
-    if (params) history.push("/products")
+    if (params) history.push("/products");
     if (modal) setModal(null);
-  }
-  
+  };
+
   return (
     <Modal onClick={handleModalClose}>
-    <Wrapper onClick={(ev) => ev.stopPropagation()}>
-      <ItemContainer>
-        <LeftDiv>
-          <img src={productInfo.imageSrc} />
-        </LeftDiv>
-        <RightDiv>
-          <Title>{productInfo.name}</Title>
-          <InfoBox>
-            <h4>From: {productInfo.companyName}</h4>
-            <h4>Category: {productInfo.category}</h4>
-            <Price>
-              ${calcItemTotal(productInfo.price, quantity).toFixed(2)}
-            </Price>
-          </InfoBox>
-          <QuantityBox>
-            Quantity:
-            <select
-              defaultValue={1}
-              placeholder="1"
-              onChange={(ev) => setQuantity(ev.target.value)}
-            >
-              {numArray.map((number) => (
-                <option key={number} value={number}>
-                  {number}
-                </option>
-              ))}
-            </select>
-          </QuantityBox>
-          {productInfo.numInStock > 0 ? (
-            <BuyButton onClick={handleClick}>Add to Cart</BuyButton>
-          ) : (
-            <BuyButton disabled={true}>Out of stock</BuyButton>
-          )}
-        </RightDiv>
-      </ItemContainer>
-    </Wrapper>
+      <Wrapper onClick={(ev) => ev.stopPropagation()}>
+        <ItemContainer>
+          <LeftDiv>
+            <img src={productInfo.imageSrc} />
+          </LeftDiv>
+          <RightDiv>
+            <Title>{productInfo.name}</Title>
+            <InfoBox>
+              <h4>From: {productInfo.companyName}</h4>
+              <h4>Category: {productInfo.category}</h4>
+              <Price>
+                ${calcItemTotal(productInfo.price, quantity).toFixed(2)}
+              </Price>
+            </InfoBox>
+            <QuantityBox>
+              Quantity:
+              <select
+                defaultValue={1}
+                placeholder="1"
+                onChange={(ev) => setQuantity(ev.target.value)}
+              >
+                {numArray.map((number) => (
+                  <option key={number} value={number}>
+                    {number}
+                  </option>
+                ))}
+              </select>
+            </QuantityBox>
+            {productInfo.numInStock > 0 ? (
+              <BuyButton onClick={handleClick}>Add to Cart</BuyButton>
+            ) : (
+              <BuyButton disabled={true}>Out of stock</BuyButton>
+            )}
+          </RightDiv>
+        </ItemContainer>
+      </Wrapper>
     </Modal>
   );
 };
 
 const Modal = styled.div`
- position: fixed;
- top: 0;
- right: 0;
- left: 0;
- bottom: 0;
- display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
- background-color: rgba(55, 55, 55, 0.8);
- z-index: 200;
-`
+  background-color: rgba(55, 55, 55, 0.8);
+  z-index: 200;
+`;
 
 const Wrapper = styled.div`
   display: flex;

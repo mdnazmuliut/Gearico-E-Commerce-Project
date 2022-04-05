@@ -1,6 +1,14 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import borderimg from "../../assets/BorderImg.gif";
 
-const Input = ({ name, type, placeholder, handleChange, defaultValue, section }) => {
+const Input = ({
+  name,
+  type,
+  placeholder,
+  handleChange,
+  defaultValue,
+  section,
+}) => {
   return (
     <Wrapper>
       <label htmlFor={name}>{placeholder}</label>
@@ -16,6 +24,32 @@ const Input = ({ name, type, placeholder, handleChange, defaultValue, section })
   );
 };
 
+const borderColor = keyframes`
+0% {
+  border: 2px solid blueviolet;
+} 
+
+20% {
+  border: 2px solid orange;
+}
+
+40% {
+  border: 2px solid yellow;
+}
+
+60% {
+  border: 2px solid green;
+}
+
+80% {
+  border: 2px solid blue;
+}
+
+100% {
+  border: 2px solid indigo;
+}
+`;
+
 const Wrapper = styled.div`
   margin-bottom: 6px;
   width: 100%;
@@ -26,18 +60,21 @@ const Wrapper = styled.div`
   }
 
   input {
-    border-radius: 3px;
-    border: 1px solid #e4e8eb;
+    border-radius: 8px;
+    border: 1px solid #6c7a89;
+    background: none;
     box-sizing: border-box;
-    color: #464a5c;
+    color: black;
     font-size: 15px;
-    font-weight: 300;
+    font-weight: 500;
     height: 36px;
     padding: 8px 12px 10px 12px;
     width: 100%;
+    outline: none;
+    transition: all 0.1s linear infinite;
 
-    &::placeholder {
-      color: #999;
+    &:focus {
+      animation: ${borderColor} 3s linear infinite;
     }
   }
 `;

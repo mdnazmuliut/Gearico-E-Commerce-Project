@@ -5,7 +5,7 @@ import bg from "../../assets/ProductBg.png";
 const ProductPreview = ({ productInfo, setModal }) => {
   return (
     <Body>
-      <Container onClick={()=> setModal(productInfo._id)}>
+      <Container onClick={() => setModal(productInfo._id)}>
         <Wrapper>
           <ImgWrap>
             <ProductImg src={productInfo.imageSrc} />
@@ -44,6 +44,7 @@ const Container = styled.button`
   text-decoration: none;
   cursor: pointer;
   font-size: 16px;
+  padding-left: 0;
 `;
 
 const Wrapper = styled.div`
