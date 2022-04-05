@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../Hooks/useContext";
 import { AccountContext } from "../Hooks/AccountContext";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const { userInfo } = useContext(AccountContext);
   const { cart, setCart, calcItemTotal, total } = useContext(DataContext);
+
   const history = useHistory();
 
   // updating the quantity of a product
@@ -43,7 +44,9 @@ const Cart = () => {
 
         <CartTotalDiv>
           <SpacerDivLeft />
-          <CartTotal>${total.toFixed(2)}</CartTotal>
+          <CartTotal>
+            <p>Total:</p> ${total.toFixed(2)}
+          </CartTotal>
         </CartTotalDiv>
 
         <CheckoutButtonDiv>
@@ -64,9 +67,7 @@ const Cart = () => {
                 >
                   Guest Checkout
                 </CheckoutButton>
-                <SignInLink to={"/signin"}>
-                  Sign in/create an account
-                </SignInLink>
+                <SignInLink to={"/signin"}>Sign In / Create Account</SignInLink>
               </>
             )}
           </CheckoutDivRight>
@@ -96,9 +97,14 @@ const CartTotalDiv = styled.div`
   display: flex;
 `;
 const CartTotal = styled.div`
-  width: 50px;
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
+
+  > p {
+    font-weight: bold;
+    margin-right: 125px;
+  }
 `;
 
 const CheckoutButtonDiv = styled.div`
@@ -125,9 +131,18 @@ const CheckoutButton = styled.button`
 `;
 
 const SignInLink = styled(Link)`
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
-  font-weight: 300;
+  font-size: 16px;
+  background-color: #00416a;
+  color: white;
+  margin: auto;
+  border-radius: 4px;
+  padding: 15px 20px;
+  text-decoration: none;
+  transition: 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default Cart;
