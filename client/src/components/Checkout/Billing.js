@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "./Input";
+import { useContext } from "react";
+import { AccountContext } from "../Hooks/AccountContext";
 
 const Billing = ({
   formData,
@@ -8,11 +10,15 @@ const Billing = ({
   handleClickNext,
   handleClickBack,
   setStepColor,
+  errMsg,
+  msg,
 }) => {
   const section = "billing";
+  const { userInfo } = useContext(AccountContext)
 
   return (
     <>
+    <ErrorWrapper>
       <Main>
         <Header>Payment Details</Header>
         <Wrapper>
@@ -22,7 +28,7 @@ const Billing = ({
               type="text"
               placeholder="Cardholder Name"
               section={section}
-              defaultValue={formData.billing.fullName}
+              defaultValue={userInfo?.shipping?.fullName || formData.billing.fullName}
               handleChange={handleChange}
             />
             <Input
@@ -30,7 +36,7 @@ const Billing = ({
               type="text"
               placeholder="Card Number"
               section={section}
-              defaultValue={formData.billing.cardNo}
+              defaultValue={userInfo?.shipping?.cardNo || formData.billing.cardNo}
               handleChange={handleChange}
             />
             <FormGroup>
@@ -39,7 +45,7 @@ const Billing = ({
                 type="text"
                 placeholder="MM"
                 section={section}
-                defaultValue={formData.billing.expMonth}
+                defaultValue={userInfo?.shipping?.expMonth || formData.billing.expMonth}
                 handleChange={handleChange}
               />
               <Input
@@ -47,7 +53,7 @@ const Billing = ({
                 type="text"
                 placeholder="YY"
                 section={section}
-                defaultValue={formData.billing.expYear}
+                defaultValue={userInfo?.shipping?.expYear || formData.billing.expYear}
                 handleChange={handleChange}
               />
             </FormGroup>
@@ -56,13 +62,15 @@ const Billing = ({
               type="text"
               placeholder="CVC / CVV"
               section={section}
-              defaultValue={formData.billing.cvv}
+              defaultValue={userInfo?.shipping?.cvv || formData.billing.cvv}
               handleChange={handleChange}
             />
           </FormContent>
           <Logo>Gearico</Logo>
         </Wrapper>
       </Main>
+      <ErrorMsg errMsg={errMsg}>{msg}</ErrorMsg>
+      </ErrorWrapper>
       <ButtonWrapper>
         <ButtonBack
           onClick={() => {
@@ -83,6 +91,17 @@ const Billing = ({
     </>
   );
 };
+
+const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ErrorMsg = styled.div`
+  visibility: ${({errMsg}) => errMsg ? "visible": "hidden"};
+`;
 
 const Main = styled.div`
   margin: 20px;

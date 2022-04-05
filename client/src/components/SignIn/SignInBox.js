@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { AccountContext } from "../Hooks/AccountContext";
 
 const SignInBox = ({setPageDisplay}) => {
+  const {setUserInfo} = useContext(AccountContext);
   const history = useHistory();
 
   const handleSubmit = (ev) => {
@@ -18,6 +21,7 @@ const SignInBox = ({setPageDisplay}) => {
     .then(res => res.json())
     .then(data => {
       if (data.status === 200) {
+        setUserInfo(data.data)
         history.push("/account")
       } else setPageDisplay({ message: data.message, status: data.status, ref: "signin" })
     })

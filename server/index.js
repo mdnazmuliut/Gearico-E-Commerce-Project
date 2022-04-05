@@ -18,6 +18,8 @@ const {
   checkEmail,
   loginAccount,
   createAccount,
+  getOrdersByEmail,
+  updateAccountInfo
 } = require("./handlersAccounts");
 
 express()
@@ -49,5 +51,7 @@ express()
   .post("/api/check-email", checkEmail)
   .post("/api/login-account", loginAccount)
   .post("/api/create-account", createAccount)
+  .post("/api/get-orders", getOrdersByEmail)
+  .patch("/api/update-account", updateAccountInfo)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

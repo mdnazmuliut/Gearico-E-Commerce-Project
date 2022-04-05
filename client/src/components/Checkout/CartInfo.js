@@ -22,7 +22,7 @@ const CartInfo = ({ cart, total }) => {
 
         <OrderDetails>
           <Header>Order Details</Header>
-          {cart.map((item) => {
+          {cart?.map((item) => {
             return (
               <Wrapper>
                 <PicnCap>
@@ -92,6 +92,7 @@ const CaptionWrap = styled.div`
 
 const Img = styled.img`
   width: 50px;
+  height: 100%;
 `;
 
 const SmallTxt = styled.div`

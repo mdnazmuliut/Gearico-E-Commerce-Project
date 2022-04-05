@@ -9,7 +9,7 @@ import Confirmation from "./Confirmation";
 
 const Checkout = () => {
   const [inputDisplay, setInputDisplay] = useState(1);
-  const { cart, total } = useContext(DataContext);
+  const { cart, total, setCart } = useContext(DataContext);
   const [stepColor, setStepColor] = useState("grey");
 
   const initialState = {
@@ -33,6 +33,79 @@ const Checkout = () => {
 
   const [formData, setFormData] = useState(initialState);
   const [subStatus, setSubStatus] = useState("idle");
+  const [errMsg, setErrMsg] = useState(false);
+  const [msg, setMsg] = useState("intial");
+
+  let status;
+  const handleValidation = (section) => {
+    setMsg("error");
+    //validate email and postal code
+    let validate = "";
+    let hasNumber = /\d/;
+    let hasPostalCode = /\w\d\w\s?\d\w\d/;
+    let monthFormat = /^(0[1-9]|1[0-2])$/;
+    let yearFormat = /^\d{2}$/;
+    let cvvFormat = /^\d{3}$/;
+
+    Object.values(formData[section]).forEach((value) => {
+      //   value === "" && (goNextPage = false);
+      value === "" && (validate = "missing-data");
+      setMsg("Please provide missing information");
+    });
+
+    if (section === "shipping") {
+      //   if (
+      //     !formData[section].email.split("").includes("@") ||
+      //     !hasNumber.test(formData[section].address) ||
+      //     !hasPostalCode.test(formData[section].postcode)
+      //   ) {
+      //     validate = "missing-data";
+      //   }
+      if (!formData[section].email.split("").includes("@")) {
+        validate = "missing-data";
+        // (validate = "@ missing in email!");
+        setMsg("@ missing in email!");
+      }
+      if (!hasNumber.test(formData[section].address)) {
+        validate = "missing-data";
+        setMsg("Address starts with number!");
+      }
+      if (!hasPostalCode.test(formData[section].postcode)) {
+        validate = "missing-data";
+        setMsg("Postal code i.e. A1B2C3");
+      }
+    }
+
+    if (section === "billing") {
+      if (formData[section].fullName === "") {
+        validate = "missing-data";
+        setMsg("Please provide name on your card!");
+      }
+      if (!hasNumber.test(formData[section].cardNo)) {
+        validate = "missing-data";
+        setMsg("Card No will be digits!");
+      }
+      if (!monthFormat.test(formData[section].expMonth)) {
+        validate = "missing-data";
+        setMsg("MM is  two digit of Month!");
+      }
+      if (!yearFormat.test(formData[section].expYear)) {
+        validate = "missing-data";
+        setMsg("YY is last two digits of Year !");
+      }
+      if (!cvvFormat.test(formData[section].cvv)) {
+        validate = "missing-data";
+        setMsg("CVV will be 3 digits!");
+      }
+    }
+
+    status = validate === "" ? "success" : "error";
+    // status = msg === "" ? "success" : "error";
+
+    let message = { status, error: validate };
+
+    return status;
+  };
 
   // updating the formData any time an input is changed
   const handleChange = (value, name, section) => {
@@ -43,19 +116,27 @@ const Checkout = () => {
 
   // NEXT BUTTON - verifying all fields have data, then incrementing the inputDisplay
   const handleClickNext = (ev, section) => {
-    let goNextPage = true;
-    // console.log("TEST SECTION?", section);
-    Object.values(formData[section]).forEach((value) => {
-      value === "" && (goNextPage = false);
-    });
 
-    if (goNextPage === true) {
+    // let goNextPage = true;
+    setErrMsg(false);
+    // setMsg("");
+    handleValidation(section);
+
+    console.log("status:", status);
+
+    
+
+
+    if (status === "success") {
       inputDisplay < 3 && setInputDisplay(inputDisplay + 1);
+    } else {
+      setErrMsg(true);
     }
   };
 
   // BACK BUTTON - decrementing the inputDisplay
   const handleClickBack = () => {
+    setErrMsg(false)
     inputDisplay > 1 && setInputDisplay(inputDisplay - 1);
   };
 
@@ -71,6 +152,7 @@ const Checkout = () => {
         _id: order.productInfo._id,
         qnt: order.qnt,
         itemTotal: order.itemTotal,
+        name: order.productInfo.name
       };
     });
 
@@ -85,6 +167,7 @@ const Checkout = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
+          setCart([]);
           setSubStatus("confirmed");
         }
       })
@@ -101,15 +184,15 @@ const Checkout = () => {
         <StepsHead>
           {/* <ProgressBar /> */}
           <StepCircle>
-            <CircleOne style={{ backgroundColor: stepColor }}>1</CircleOne>
+            <CircleOne style={{ backgroundColor: inputDisplay >= 1 ? "green": "gray" }}>1</CircleOne>
             <div>Shipping</div>
           </StepCircle>
           <StepCircle>
-            <CircleTwo style={{ backgroundColor: stepColor }}>2</CircleTwo>
+            <CircleTwo style={{ backgroundColor: inputDisplay >= 2 ? "green": "gray" }}>2</CircleTwo>
             <div>Billing</div>
           </StepCircle>
           <StepCircle>
-            <CircleThree style={{ backgroundColor: stepColor }}>3</CircleThree>
+            <CircleThree style={{ backgroundColor: inputDisplay >= 3 ? "green": "gray" }}>3</CircleThree>
             <div>Review</div>
           </StepCircle>
         </StepsHead>
@@ -117,6 +200,8 @@ const Checkout = () => {
           <InputSection>
             {inputDisplay === 1 && (
               <Shipping
+                errMsg={errMsg}
+                msg={msg}
                 setStepColor={setStepColor}
                 formData={formData}
                 handleChange={handleChange}
@@ -125,6 +210,8 @@ const Checkout = () => {
             )}
             {inputDisplay === 2 && (
               <Billing
+                errMsg={errMsg}
+                msg={msg}
                 setStepColor={setStepColor}
                 formData={formData}
                 handleChange={handleChange}
@@ -139,9 +226,11 @@ const Checkout = () => {
                 handleClickBack={handleClickBack}
               />
             )}
+            
           </InputSection>
           <CartInfo cart={cart} total={total} />
         </Main>
+        
         <PlaceOrderBtn
           onClick={handleClick}
           disabled={inputDisplay === 3 ? false : true}

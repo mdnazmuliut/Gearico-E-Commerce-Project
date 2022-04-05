@@ -1,27 +1,39 @@
 import styled from "styled-components";
-import { BiShoppingBag } from "react-icons/bi";
+import { useContext } from "react";
+import { AccountContext } from "../Hooks/AccountContext";
+import { DataContext } from "../Hooks/useContext";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { userInfo } = useContext(AccountContext)
+  const { cart } = useContext(DataContext)
+
   return (
     <>
       <HeaderWrap>
         <Wrapper>
-          <Logo href="/">Gearico</Logo>
+          <Logo to={"/"}>Gearico</Logo>
           <NavMenu>
             <NavList>
               <NavItem>
-                <LinkNav href="/">Home</LinkNav>
+                <LinkNav to={"/"}>Home</LinkNav>
               </NavItem>
               <NavItem>
-                <LinkNav href="/products">Products</LinkNav>
+                <LinkNav to={"/products"}>Products</LinkNav>
               </NavItem>
+              {userInfo ? (
               <NavItem>
-                <LinkNav href="/">Contact</LinkNav>
+                <LinkNav to={"/account"}>Account</LinkNav>
               </NavItem>
+              ):(
               <NavItem>
-                <LinkNav href="/cart">
+                <LinkNav to={"/signin"}>Sign In</LinkNav>
+              </NavItem>
+              )}
+              <NavItem>
+                <LinkNav to={"/cart"}>
                   {/* <BiShoppingBag className="cart" /> Cart */}
-                  Cart
+                  Cart ({cart.length})
                 </LinkNav>
               </NavItem>
             </NavList>
@@ -60,7 +72,7 @@ const Wrapper = styled.nav`
   align-items: center;
 `;
 
-const Logo = styled.a`
+const Logo = styled(Link)`
   font-weight: 600;
   font-size: 30px;
   color: white;
@@ -83,7 +95,7 @@ const NavList = styled.ul`
 
 const NavItem = styled.li``;
 
-const LinkNav = styled.a`
+const LinkNav = styled(Link)`
   color: white;
   text-transform: initial;
   position: relative;
