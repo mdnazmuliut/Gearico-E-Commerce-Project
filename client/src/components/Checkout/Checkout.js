@@ -9,7 +9,7 @@ import Confirmation from "./Confirmation";
 
 const Checkout = () => {
   const [inputDisplay, setInputDisplay] = useState(1);
-  const { cart, total } = useContext(DataContext);
+  const { cart, total, setCart } = useContext(DataContext);
   const [stepColor, setStepColor] = useState("grey");
 
   const initialState = {
@@ -34,7 +34,7 @@ const Checkout = () => {
   const [formData, setFormData] = useState(initialState);
   const [subStatus, setSubStatus] = useState("idle");
   const [errMsg, setErrMsg] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState("intial");
 
   let status;
   const handleValidation = (section) => {
@@ -136,6 +136,7 @@ const Checkout = () => {
 
   // BACK BUTTON - decrementing the inputDisplay
   const handleClickBack = () => {
+    setErrMsg(false)
     inputDisplay > 1 && setInputDisplay(inputDisplay - 1);
   };
 
@@ -151,6 +152,7 @@ const Checkout = () => {
         _id: order.productInfo._id,
         qnt: order.qnt,
         itemTotal: order.itemTotal,
+        name: order.productInfo.name
       };
     });
 
@@ -165,6 +167,7 @@ const Checkout = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
+          setCart([]);
           setSubStatus("confirmed");
         }
       })
@@ -197,6 +200,8 @@ const Checkout = () => {
           <InputSection>
             {inputDisplay === 1 && (
               <Shipping
+                errMsg={errMsg}
+                msg={msg}
                 setStepColor={setStepColor}
                 formData={formData}
                 handleChange={handleChange}
@@ -205,6 +210,8 @@ const Checkout = () => {
             )}
             {inputDisplay === 2 && (
               <Billing
+                errMsg={errMsg}
+                msg={msg}
                 setStepColor={setStepColor}
                 formData={formData}
                 handleChange={handleChange}
@@ -219,10 +226,11 @@ const Checkout = () => {
                 handleClickBack={handleClickBack}
               />
             )}
+            
           </InputSection>
           <CartInfo cart={cart} total={total} />
         </Main>
-        {errMsg === true && <div>{msg}</div>}
+        
         <PlaceOrderBtn
           onClick={handleClick}
           disabled={inputDisplay === 3 ? false : true}

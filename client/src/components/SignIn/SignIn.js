@@ -8,7 +8,7 @@ import Message from "./Message";
 
 const SignIn = () => {
   const [pageDisplay, setPageDisplay] = useState("signin");
-  console.log(pageDisplay);
+
   return (
     <PageWrapper>
       <ContentWrapper>

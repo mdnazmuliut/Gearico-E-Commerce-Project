@@ -8,10 +8,9 @@ const Message = ({ setPageDisplay, pageDisplay}) => {
     const history = useHistory();
     
     if (pageDisplay.status === 200 && pageDisplay.ref === "signup") {
-        
         setTimeout(()=> {
+            setUserInfo({email: pageDisplay.email})
             history.push("/account") 
-            setUserInfo(pageDisplay.email)
         }, 4000)
     }
 

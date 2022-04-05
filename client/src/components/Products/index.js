@@ -30,7 +30,7 @@ const Products = () => {
 
   useEffect(() => {
     // fetching category-specific items if a category has been selected...
-    if (catSelection) {
+    if (catSelection || catParam) {
       fetch(
         `/api/get-items/cat/${catSelection}?start=${startPoint}&limit=${numItems}`
       )

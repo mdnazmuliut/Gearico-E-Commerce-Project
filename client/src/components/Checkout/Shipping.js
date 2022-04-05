@@ -1,17 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "./Input";
+import { useContext } from "react";
+import { AccountContext } from "../Hooks/AccountContext";
 
 const Shipping = ({
   formData,
   handleChange,
   handleClickNext,
   setStepColor,
+  errMsg,
+  msg,
 }) => {
   const section = "shipping";
+  const { userInfo } = useContext(AccountContext)
 
   return (
     <>
+    <ErrorWrapper>
       <Main>
         <Header>Shipping Address</Header>
         <Wrapper>
@@ -22,7 +28,7 @@ const Shipping = ({
                 type="text"
                 placeholder="First name"
                 section={section}
-                defaultValue={formData.shipping.firstName}
+                defaultValue={userInfo?.shipping?.firstName || formData.shipping.firstName}
                 handleChange={handleChange}
               />
               <Input
@@ -30,7 +36,7 @@ const Shipping = ({
                 type="text"
                 placeholder="Last name"
                 section={section}
-                defaultValue={formData.shipping.lastName}
+                defaultValue={userInfo?.shipping?.lastName || formData.shipping.lastName}
                 handleChange={handleChange}
               />
             </FormGroup>
@@ -39,7 +45,7 @@ const Shipping = ({
               type="email"
               placeholder="Email"
               section={section}
-              defaultValue={formData.shipping.email}
+              defaultValue={userInfo?.email || formData.shipping.email}
               handleChange={handleChange}
             />
             <Input
@@ -47,7 +53,7 @@ const Shipping = ({
               type="address"
               placeholder="Address"
               section={section}
-              defaultValue={formData.shipping.address}
+              defaultValue={userInfo?.shipping?.address || formData.shipping.address}
               handleChange={handleChange}
             />
             <FormGroup>
@@ -56,7 +62,7 @@ const Shipping = ({
                 type="text"
                 placeholder="City"
                 section={section}
-                defaultValue={formData.shipping.city}
+                defaultValue={userInfo?.shipping?.city || formData.shipping.city}
                 handleChange={handleChange}
               />
               <Input
@@ -64,7 +70,7 @@ const Shipping = ({
                 type="text"
                 placeholder="Province"
                 section={section}
-                defaultValue={formData.shipping.province}
+                defaultValue={userInfo?.shipping?.province || formData.shipping.province}
                 handleChange={handleChange}
               />
             </FormGroup>
@@ -74,7 +80,7 @@ const Shipping = ({
                 type="text"
                 placeholder="Postal Code"
                 section={section}
-                defaultValue={formData.shipping.postcode}
+                defaultValue={userInfo?.shipping?.postcode || formData.shipping.postcode}
                 handleChange={handleChange}
               />
               <Input
@@ -82,7 +88,7 @@ const Shipping = ({
                 type="text"
                 placeholder="Country"
                 section={section}
-                defaultValue={formData.shipping.country}
+                defaultValue={userInfo?.shipping?.country || formData.shipping.country}
                 handleChange={handleChange}
               />
             </FormGroup>
@@ -90,6 +96,8 @@ const Shipping = ({
           <Logo>Gearico</Logo>
         </Wrapper>
       </Main>
+      <ErrorMsg errMsg={errMsg}>{msg}</ErrorMsg>
+      </ErrorWrapper>
       <ButtonWrapper>
         <ButtonNextOne
           onClick={(ev) => {
@@ -102,6 +110,17 @@ const Shipping = ({
     </>
   );
 };
+
+const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ErrorMsg = styled.div`
+  visibility: ${({errMsg}) => errMsg ? "visible": "hidden"};
+`;
 
 const Main = styled.form`
   margin: 20px;
